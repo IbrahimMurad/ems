@@ -179,7 +179,7 @@ class CompanyViewTest(APITestCase):
 
     def test_company_unauthorized(self) -> None:
         response = self.client.get("/api/companies/")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
         self.client.force_authenticate(user=self.employee)
         response = self.client.get("/api/companies/")
@@ -233,7 +233,7 @@ class CompanyViewTest(APITestCase):
 
     def test_company_retrieve_unauthorized(self) -> None:
         response = self.client.get(f"/api/companies/{self.company.id}/")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
         self.client.force_authenticate(user=self.employee)
         response = self.client.get(f"/api/companies/{self.company.id}/")

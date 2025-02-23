@@ -290,10 +290,10 @@ class DepartmentViewSetTest(APITestCase):
 
     def test_department_view_set_unauthorized(self) -> None:
         response = self.client.get(f"/api/departments/{self.department.id}/")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
         response = self.client.get("/api/departments/")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
         self.client.force_authenticate(user=self.employee)
         response = self.client.get(f"/api/departments/{self.department.id}/")

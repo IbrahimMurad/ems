@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from core.permissions import IsManagerOrOwner
 from employee.models import Employee
 from employee.serializers import EmployeeSerializer
 
@@ -9,4 +8,4 @@ from employee.serializers import EmployeeSerializer
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated, IsManagerOrOwner]
+    permission_classes = [IsAuthenticated]
