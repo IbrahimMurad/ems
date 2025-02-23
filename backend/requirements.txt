@@ -1,0 +1,4 @@
+Django>=5.1.2		# Django web framework
+djangorestframework>=3.14.0		# Django REST framework
+django-environ>=0.11.2		# Environment variables for Django
+psycopg2>=2.9.10		# PostgreSQL database adapter for postgres engine
