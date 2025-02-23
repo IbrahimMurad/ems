@@ -22,4 +22,6 @@ class IsManagerOrOwner(BasePermission):
 
 class IsAdminOrOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.id == request.user.id or request.user.is_admin
+        if view.action in ["update", "partial_update", "retrieve"]:
+            return obj.id == request.user.id or request.user.is_admin
+        return request.user.is_admin
