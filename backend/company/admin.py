@@ -5,7 +5,7 @@ from department.admin import DepatmentInline
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    inline = DepatmentInline
+    inlines = [DepatmentInline]
 
 
-admin.site.register(Company)
+admin.site.register(Company, CompanyAdmin)
