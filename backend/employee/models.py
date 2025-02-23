@@ -74,6 +74,26 @@ class Employee(BaseModel):
             raise ValidationError(
                 message="The department must be related to the company", code="invalid"
             )
+
+        # Ensure the correct flow of status changes
+        # From Application Received to Interview Scheduled
+        # From Application Received to Not Accepted
+        # From Interview Scheduled to Hired or Not Accepted
+        # From Hired to Not Accepted (for termination)
+        # From Not Accepted to Application Received (for re-application)
+        try:
+            old_employee = Employee.objects.get(pk=self.pk)
+            if old_employee.status != self.status:
+                if (
+                    old_employee.status == self.StatusChoices.APPLICATION_RECEIVED
+                    and self.status == self.StatusChoices.HIRED
+                ):
+                    raise ValidationError(
+                        message="Employee must be interviewed before hiring",
+                        code="invalid",
+                    )
+        except Employee.DoesNotExist:
+            pass
         return super().clean()
 
     def save(self, *args, **kwargs) -> None:
@@ -90,24 +110,6 @@ class Employee(BaseModel):
 
         if self.hired_on:
             self.days_employed = (timezone.now() - self.hired_on).days
-
-        # Ensure the correct flow of status changes
-        # From Application Received to Interview Scheduled
-        # From Application Received to Not Accepted
-        # From Interview Scheduled to Hired or Not Accepted
-        # From Hired to Not Accepted (for termination)
-        # From Not Accepted to Application Received (for re-application)
-        if self.pk:
-            old_employee = Employee.objects.get(pk=self.pk)
-            if old_employee.status != self.status:
-                if (
-                    old_employee.status == self.StatusChoices.APPLICATION_RECEIVED
-                    and self.status == self.StatusChoices.HIRED
-                ):
-                    raise ValidationError(
-                        message="Employee must be interviewed before hiring",
-                        code="invalid",
-                    )
 
         self.full_clean()
         super().save(*args, **kwargs)

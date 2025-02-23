@@ -4,6 +4,9 @@ from company.models import Company
 
 
 class CompanySerializer(serializers.ModelSerializer):
+
+    url = serializers.HyperlinkedIdentityField(view_name="company-detail")
+
     class Meta:
         model = Company
         fields = "__all__"
