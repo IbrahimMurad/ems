@@ -7,6 +7,6 @@ from department.serializers import DepartmentSerializer
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
-    queryset = Department.objects.all()
+    queryset = Department.objects.select_related("company")
     serializer_class = DepartmentSerializer
     permission_classes = [IsAuthenticated, IsManager]

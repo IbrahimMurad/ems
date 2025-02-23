@@ -6,6 +6,6 @@ from employee.serializers import EmployeeSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-    queryset = Employee.objects.all()
+    queryset = Employee.objects.select_related("department", "company")
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated]
