@@ -53,7 +53,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="grid place-items-center h-screen bg-slate-100 p-4">
+    <div className="grid place-items-center h-screen bg-purple-50 p-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg min-w-72">
         <form
           onSubmit={handleSubmit}
