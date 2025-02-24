@@ -1,12 +1,8 @@
-from rest_framework import serializers
-
 from company.models import Company
+from rest_framework import serializers
 
 
 class CompanySerializer(serializers.ModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(view_name="company-detail")
-
     class Meta:
         model = Company
         fields = "__all__"

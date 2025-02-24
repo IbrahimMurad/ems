@@ -1,0 +1,87 @@
+export type authenticatedUser = {
+  id: number;
+  username: string;
+  role: "Admin" | "Manager" | "Employee";
+};
+
+export type user = {
+  id: number;
+  url: string;
+  last_login: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_active: boolean;
+  date_joined: string;
+  password: string;
+  role: "Admin" | "Manager" | "Employee";
+};
+
+export type company = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  number_of_departments: number;
+  number_of_employees: number;
+};
+
+export type department = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  url: string;
+  name: string;
+  number_of_employees: number;
+  company: company;
+};
+
+export type employee = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  companty: company;
+  department: department;
+  url: string;
+  name: string;
+  email: string;
+  mobile_number: string;
+  address: string;
+  designation: string;
+  hired_on: string;
+  days_employed: number;
+  status:
+    | "application_received"
+    | "interview scheduled"
+    | "hired"
+    | "not accepted";
+};
+
+export type usersList = {
+  count: number;
+  next: string;
+  previous: string;
+  results: user[];
+};
+
+export type companiesList = {
+  count: number;
+  next: string;
+  previous: string;
+  results: company[];
+};
+
+export type departmentsList = {
+  count: number;
+  next: string;
+  previous: string;
+  results: department[];
+};
+
+export type employeesList = {
+  count: number;
+  next: string;
+  previous: string;
+  results: employee[];
+};
