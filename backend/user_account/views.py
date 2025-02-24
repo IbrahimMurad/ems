@@ -1,13 +1,12 @@
 from typing import Any
 
+from core.permissions import IsAdmin
 from rest_framework import exceptions, permissions, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt import views
-
-from core.permissions import IsAdmin
 from user_account.models import User
 from user_account.serializers import UserSerializer
 from user_account.services import refresh_token, set_tokens
