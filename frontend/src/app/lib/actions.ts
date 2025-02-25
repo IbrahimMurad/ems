@@ -47,7 +47,7 @@ export async function createEmployee(formData: FormData) {
     department: formData.get("department"),
     name: formData.get("name"),
     email: formData.get("email"),
-    phone_number: formData.get("phone_number"),
+    mobile_number: formData.get("mobile_number"),
     status: formData.get("status"),
     address: formData.get("address"),
     designation: formData.get("designation"),

@@ -51,7 +51,7 @@ class Employee(BaseModel):
         db_index=True,
     )
     name = models.CharField(max_length=200, db_index=True)
-    email = models.EmailField(db_index=True, unique=True)
+    email = models.EmailField(db_index=True)
     mobile_number = models.CharField(
         max_length=20, validators=[mobile_number_validator]
     )

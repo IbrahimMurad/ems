@@ -9,8 +9,8 @@ export default function Form({ companies }: { companies: company[] }) {
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Comapny*/}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
-            Department name:
+          <label htmlFor="company" className="mb-2 block text-sm font-medium">
+            Company:
           </label>
           <div className="relative mt-2 rounded-md">
             <select
