@@ -9,21 +9,20 @@ import { useSearchParams, usePathname } from "next/navigation";
 export default function Pagination({ count }: { count: number }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const params = new URLSearchParams(searchParams);
+  const currentPage = Number(searchParams.get("page")) || 1;
 
-  const currentPage = Number(searchParams.get("page")?.toString()) || 1;
-  params.delete("page");
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
 
-  const otherParams = params.toString() === "" ? "" : `&${params.toString()}`;
-  const previous =
-    currentPage > 1
-      ? `${pathname}?page=${currentPage - 1}${otherParams}`
-      : null;
-  const next =
-    count > currentPage * 10
-      ? `${pathname}?page=${currentPage + 1}${otherParams}`
-      : null;
   const numberOfPages = Math.ceil(count / 10) || 1;
+
+  const previous = currentPage > 1 ? createPageURL(currentPage - 1) : null;
+  const next =
+    currentPage < numberOfPages ? createPageURL(currentPage + 1) : null;
+
   const allPages = generatePagination(currentPage, numberOfPages);
   return (
     <>
@@ -42,7 +41,7 @@ export default function Pagination({ count }: { count: number }) {
             if (page === numberOfPages) position = "last";
             if (numberOfPages === 1) position = "single";
             if (page === "...") position = "middle";
-            const href = `${pathname}?page=${page}${otherParams}`;
+            const href = createPageURL(page);
             return (
               <PaginationNumber
                 key={page}
