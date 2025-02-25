@@ -1,11 +1,10 @@
+from company.models import Company
+from core.basemodel import BaseModel
+from department.models import Department
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
-
-from company.models import Company
-from core.basemodel import BaseModel
-from department.models import Department
 
 
 class MobileNumberValidator(RegexValidator):
@@ -26,9 +25,9 @@ class Employee(BaseModel):
             "application_received",
             "Application Received",
         )
-        INTERVIEW_SCHEDULED = "interview scheduled", "Interview Scheduled"
+        INTERVIEW_SCHEDULED = "interview_scheduled", "Interview Scheduled"
         HIRED = "hired", "Hired"
-        NOT_ACCEPTED = "not accepted", "Not Accepted"
+        NOT_ACCEPTED = "not_accepted", "Not Accepted"
 
     mobile_number_validator = MobileNumberValidator()
 

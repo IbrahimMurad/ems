@@ -1,6 +1,7 @@
 import { fetchUsers } from "@/app/lib/data";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import DeleteItem from "@/app/ui/DeleteItem";
 
 export default async function Page() {
   const users = await fetchUsers();
@@ -47,13 +48,7 @@ export default async function Page() {
                       <span className="sr-only">{`Edit ${user.username}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <button
-                      type="submit"
-                      className="text-gray-800 hover:text-red-800 hover:scale-110"
-                    >
-                      <span className="sr-only">Delete</span>
-                      <TrashIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    <DeleteItem url={user.url} />
                   </td>
                 </tr>
               ))}

@@ -6,5 +6,5 @@ export default function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <CommonLayout pageTitle="Users">{children}</CommonLayout>;
+  return <CommonLayout pageTitle="Departments">{children}</CommonLayout>;
 }

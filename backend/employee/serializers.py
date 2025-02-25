@@ -16,6 +16,10 @@ class WriteEmployeeSerializer(serializers.ModelSerializer):
 
 
 class ReadEmployeeSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="employee-detail", lookup_field="pk"
+    )
+
     class Meta:
         model = Employee
         fields = "__all__"
@@ -33,5 +37,6 @@ class ReadEmployeeSerializer(serializers.ModelSerializer):
             "designation",
             "hired_on",
             "days_employed",
+            "url",
         ]
         depth = 1

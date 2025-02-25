@@ -25,6 +25,7 @@ export type company = {
   name: string;
   number_of_departments: number;
   number_of_employees: number;
+  url: string;
 };
 
 export type department = {
@@ -41,7 +42,7 @@ export type employee = {
   id: string;
   created_at: string;
   updated_at: string;
-  companty: company;
+  company: company;
   department: department;
   url: string;
   name: string;
@@ -53,9 +54,21 @@ export type employee = {
   days_employed: number;
   status:
     | "application_received"
-    | "interview scheduled"
+    | "interview_scheduled"
     | "hired"
-    | "not accepted";
+    | "not_accepted";
+};
+
+export type statusType = {
+  display: string;
+  style: string;
+};
+
+export type statusDisplayAndStyles = {
+  application_received: statusType;
+  interview_scheduled: statusType;
+  hired: statusType;
+  not_accepted: statusType;
 };
 
 export type usersList = {

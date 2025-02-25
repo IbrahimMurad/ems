@@ -10,6 +10,10 @@ class WriteDepartmentSerializer(serializers.ModelSerializer):
 
 
 class ReadDepartmentSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name="department-detail", lookup_field="pk"
+    )
+
     class Meta:
         model = Department
         fields = "__all__"
@@ -20,5 +24,6 @@ class ReadDepartmentSerializer(serializers.ModelSerializer):
             "number_of_employees",
             "name",
             "company",
+            "url",
         ]
         depth = 1
