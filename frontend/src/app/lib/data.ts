@@ -15,9 +15,16 @@ const urls = {
   users: "http://127.0.0.1:8000/api/users/",
 };
 
-export async function fetchUsers(): Promise<usersList> {
+export async function fetchUsers(
+  page?: number,
+  search?: string
+): Promise<usersList> {
   try {
-    const response = await fetch(urls.users);
+    const response = await fetch(
+      urls.users +
+        (page ? `?page=${page}` : "") +
+        (search ? `&search=${search}` : "")
+    );
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -35,9 +42,16 @@ export async function fetchUsers(): Promise<usersList> {
   }
 }
 
-export async function fetchCompanies(): Promise<companiesList> {
+export async function fetchCompanies(
+  page?: number,
+  search?: string
+): Promise<companiesList> {
   try {
-    const response = await fetch(urls.companies);
+    const response = await fetch(
+      urls.companies +
+        (page ? `?page=${page}` : "") +
+        (search ? `&search=${search}` : "")
+    );
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -50,9 +64,16 @@ export async function fetchCompanies(): Promise<companiesList> {
   }
 }
 
-export async function fetchDepartments(): Promise<departmentsList> {
+export async function fetchDepartments(
+  page?: number,
+  search?: string
+): Promise<departmentsList> {
   try {
-    const response = await fetch(urls.departments);
+    const response = await fetch(
+      urls.departments +
+        (page ? `?page=${page}` : "") +
+        (search ? `&search=${search}` : "")
+    );
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -65,9 +86,16 @@ export async function fetchDepartments(): Promise<departmentsList> {
   }
 }
 
-export async function fetchEmployees(): Promise<employeesList> {
+export async function fetchEmployees(
+  page?: number,
+  search?: string
+): Promise<employeesList> {
   try {
-    const response = await fetch(urls.employees);
+    const response = await fetch(
+      urls.employees +
+        (page ? `?page=${page}` : "") +
+        (search ? `&search=${search}` : "")
+    );
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);

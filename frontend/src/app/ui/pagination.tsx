@@ -4,24 +4,27 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
 import { generatePagination } from "@/app/lib/utils";
+import { useSearchParams, usePathname } from "next/navigation";
 
-export default function Pagination({
-  count,
-  next,
-  previous,
-}: {
-  count: number;
-  next: string | null;
-  previous: string | null;
-}) {
+export default function Pagination({ count }: { count: number }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const params = new URLSearchParams(searchParams);
+
+  const currentPage = Number(searchParams.get("page")?.toString()) || 1;
+  params.delete("page");
+
+  const otherParams = params.toString() === "" ? "" : `&${params.toString()}`;
+  const previous =
+    currentPage > 1
+      ? `${pathname}?page=${currentPage - 1}${otherParams}`
+      : null;
+  const next =
+    count > currentPage * 10
+      ? `${pathname}?page=${currentPage + 1}${otherParams}`
+      : null;
   const numberOfPages = Math.ceil(count / 10) || 1;
-  const currentPage = parseInt(
-    next?.split("page=")[1]?.split("&")[0] ||
-      previous?.split("page=")[1]?.split("&")[0] ||
-      "1"
-  );
   const allPages = generatePagination(currentPage, numberOfPages);
-  const baseUrl = next?.split("?")[0] || previous?.split("?")[0] || "";
   return (
     <>
       <div className="inline-flex">
@@ -39,11 +42,11 @@ export default function Pagination({
             if (page === numberOfPages) position = "last";
             if (numberOfPages === 1) position = "single";
             if (page === "...") position = "middle";
-
+            const href = `${pathname}?page=${page}${otherParams}`;
             return (
               <PaginationNumber
                 key={page}
-                href={`${baseUrl}?page=${page}`}
+                href={href}
                 page={page}
                 position={position}
                 isActive={currentPage === page}
