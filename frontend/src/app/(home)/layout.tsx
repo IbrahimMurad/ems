@@ -7,11 +7,11 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="h-screen flex flex-col md:flex-row md:overflow-hidden">
+    <div className="h-screen flex flex-col md:flex-row md:overflow-hidden">
       <div className="w-full flex-none md:w-64">
         <NavBar />
       </div>
       <div className="grow p-4 md:p-8 md:overflow-y-auto">{children}</div>
-    </main>
+    </div>
   );
 }
