@@ -98,3 +98,10 @@ export type employeesList = {
   previous: string;
   results: employee[];
 };
+
+export const urls = {
+  companies: "http://127.0.0.1:8000/api/companies/",
+  departments: "http://127.0.0.1:8000/api/departments/",
+  employees: "http://127.0.0.1:8000/api/employees/",
+  users: "http://127.0.0.1:8000/api/users/",
+};

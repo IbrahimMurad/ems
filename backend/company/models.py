@@ -1,6 +1,5 @@
-from django.db import models
-
 from core.basemodel import BaseModel
+from django.db import models
 
 
 class Company(BaseModel):
@@ -18,4 +17,4 @@ class Company(BaseModel):
     class Meta:
         verbose_name = "Company"
         verbose_name_plural = "Companies"
-        ordering = ["name"]
+        ordering = ["-created_at"]

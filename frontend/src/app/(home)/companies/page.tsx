@@ -18,7 +18,7 @@ export default async function Page(props: {
     <div className="w-full">
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search companies..." />
-        <CreateButton href="/comapnies/create" model="Company" />
+        <CreateButton href="/companies/create" model="Company" />
       </div>
       <CompaniesTable companies={companies.results} />
       <div className="mt-5 flex w-full justify-center">

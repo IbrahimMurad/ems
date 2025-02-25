@@ -7,13 +7,7 @@ import {
   user,
 } from "./definitions";
 import { isoToLocaleDate } from "./utils";
-
-const urls = {
-  companies: "http://127.0.0.1:8000/api/companies/",
-  departments: "http://127.0.0.1:8000/api/departments/",
-  employees: "http://127.0.0.1:8000/api/employees/",
-  users: "http://127.0.0.1:8000/api/users/",
-};
+import { urls } from "./definitions";
 
 export async function fetchUsers(
   page?: number,
