@@ -5,6 +5,8 @@ import {
   fetchCompanies,
   fetchDepartments,
 } from "@/app/lib/data";
+import { employee } from "@/app/lib/definitions";
+import { notFound } from "next/navigation";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -12,6 +14,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const employee = await retrieveEmployee(id);
   const companies = await fetchCompanies();
   const departments = await fetchDepartments();
+
+  if (!employee) {
+    notFound();
+  }
   return (
     <main>
       <Breadcrumbs
@@ -25,7 +31,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         ]}
       />
       <EditEmployeeForm
-        employee={employee}
+        employee={employee as employee}
         companies={companies.results}
         departments={departments.results}
       />

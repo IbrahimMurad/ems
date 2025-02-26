@@ -33,14 +33,16 @@ export async function fetchUsers(
     }));
     return users;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch users.");
+    throw new Error(`Failed to fetch users.\t ${error}`);
   }
 }
 
-export async function retrieveUser(id: string): Promise<user> {
+export async function retrieveUser(id: string): Promise<user | null> {
   try {
     const response = await fetch(`${urls.users}${id}/`);
+    if (response.status === 404) {
+      return null;
+    }
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -50,8 +52,7 @@ export async function retrieveUser(id: string): Promise<user> {
     user.last_login = user.last_login ? isoToLocaleDate(user.last_login) : "-";
     return user;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch user.");
+    throw new Error(`Failed to fetch user. ${error}`);
   }
 }
 
@@ -72,14 +73,16 @@ export async function fetchCompanies(
     const companies = await response.json();
     return companies;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch companies.");
+    throw new Error(`Failed to fetch companies. ${error}`);
   }
 }
 
-export async function retrieveCompany(id: string): Promise<company> {
+export async function retrieveCompany(id: string): Promise<company | null> {
   try {
     const response = await fetch(`${urls.companies}${id}/`);
+    if (response.status === 404) {
+      return null;
+    }
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -89,8 +92,7 @@ export async function retrieveCompany(id: string): Promise<company> {
     company.updated_at = isoToLocaleDate(company.updated_at);
     return company;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch company.");
+    throw new Error(`Failed to fetch company. ${error}`);
   }
 }
 
@@ -111,14 +113,18 @@ export async function fetchDepartments(
     const department = await response.json();
     return department;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch departments.");
+    throw new Error(`Failed to fetch departments. ${error}`);
   }
 }
 
-export async function retrieveDepartment(id: string): Promise<department> {
+export async function retrieveDepartment(
+  id: string
+): Promise<department | null> {
   try {
     const response = await fetch(`${urls.departments}${id}/`);
+    if (response.status === 404) {
+      return null;
+    }
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -128,8 +134,7 @@ export async function retrieveDepartment(id: string): Promise<department> {
     department.updated_at = isoToLocaleDate(department.updated_at);
     return department;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch department.");
+    throw new Error(`Failed to fetch department. ${error}`);
   }
 }
 
@@ -156,14 +161,16 @@ export async function fetchEmployees(
     }));
     return employees;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch employees.");
+    throw new Error(`Failed to fetch employees. ${error}`);
   }
 }
 
-export async function retrieveEmployee(id: string): Promise<employee> {
+export async function retrieveEmployee(id: string): Promise<employee | null> {
   try {
     const response = await fetch(`${urls.employees}${id}/`);
+    if (response.status === 404) {
+      return null;
+    }
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error);
@@ -176,7 +183,6 @@ export async function retrieveEmployee(id: string): Promise<employee> {
       : "(Not hired yet)";
     return employee;
   } catch (error) {
-    console.error("API Error:", error);
-    throw new Error("Failed to fetch employee.");
+    throw new Error(`Failed to fetch employee. ${error}`);
   }
 }
