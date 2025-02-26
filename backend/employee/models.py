@@ -53,8 +53,8 @@ class Employee(BaseModel):
     name = models.CharField(max_length=200, db_index=True)
     email = models.EmailField(db_index=True)
     mobile_number = models.CharField(max_length=20, validators=[mobile_number_validator])
-    address = models.CharField(max_length=265)
-    designation = models.CharField(max_length=265)
+    address = models.CharField(max_length=265, default="", blank=True)
+    designation = models.CharField(max_length=265, default="", blank=True)
     hired_on = models.DateTimeField(null=True, blank=True)
     days_employed = models.PositiveIntegerField(default=0)
 

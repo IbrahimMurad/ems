@@ -73,16 +73,8 @@ const EmployeeSchema = z.object({
         "Status must be one of application_received, interview_scheduled, hired, not_accepted",
     }
   ),
-  address: z
-    .string()
-    .nonempty({ message: "Address must not be empty." })
-    .min(2, { message: "Address must be at least 2 characters long." })
-    .max(256, { message: "Address must be maximum 256 characters long." }),
-  designation: z
-    .string()
-    .nonempty({ message: "Designation must not be empty." })
-    .min(2, { message: "Designation must be at least 2 characters long." })
-    .max(256, { message: "Designation must be maximum 256 characters long." }),
+  address: z.string().optional(),
+  designation: z.string().optional(),
 });
 
 export const CreateCompany = CompanySchema;
@@ -102,4 +94,6 @@ export const CreateUser = UserSchema.extend({
   path: ["confirm_password"],
 });
 
-export const UpdateUser = UserSchema.partial();
+export const UpdateUser = UserSchema.omit({
+  password: true,
+});

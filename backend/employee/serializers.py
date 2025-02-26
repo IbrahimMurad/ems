@@ -15,17 +15,17 @@ class WriteEmployeeSerializer(serializers.ModelSerializer):
         ]
 
     def validate_status(self, value):
-        if self.instance.status != value:
+        if self.instance and self.instance.status != value:
             if (
                 self.instance.status == Employee.StatusChoices.APPLICATION_RECEIVED
                 and value == Employee.StatusChoices.HIRED
             ):
-                raise serializers.ValidationError(message="Employee must be interviewed before hiring", code="invalid")
+                raise serializers.ValidationError(detail="Employee must be interviewed before hiring", code="invalid")
         return value
 
     def validate_company(self, value):
-        if self.instance.company != self.instance.department.company:
-            raise serializers.ValidationError(message="The department must be related to the company", code="invalid")
+        if self.instance and self.instance.company != self.instance.department.company:
+            raise serializers.ValidationError(detail="The department must be related to the company", code="invalid")
         return value
 
 

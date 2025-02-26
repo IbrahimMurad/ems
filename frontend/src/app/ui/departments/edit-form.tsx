@@ -13,7 +13,7 @@ export default function EditDepartmentForm({
   department: department;
   companies: company[];
 }) {
-  const initialState: State = { errors: {}, message: "" };
+  const initialState: State = { message: null, errors: {} };
   const updateDepartmentWithId = updateDepartment.bind(null, department.id);
   const [state, formAction] = useActionState(
     updateDepartmentWithId,

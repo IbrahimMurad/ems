@@ -1,9 +1,10 @@
 "use client";
 
+import { useActionState } from "react";
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
 import { company, department } from "@/app/lib/definitions";
-import { createEmployee } from "@/app/lib/actions";
+import { createEmployee, State } from "@/app/lib/actions/employee";
 import { useState } from "react";
 
 export default function Form({
@@ -14,8 +15,12 @@ export default function Form({
   departments: department[];
 }) {
   const [selectedCompany, setSelectedCompany] = useState<string>("");
+
+  const initialState: State = { message: null, errors: {} };
+  const [state, formAction] = useActionState(createEmployee, initialState);
+
   return (
-    <form action={createEmployee}>
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Comapny*/}
         <div className="mb-4">
@@ -29,7 +34,7 @@ export default function Form({
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
               value={selectedCompany}
               onChange={(e) => setSelectedCompany(e.target.value)}
-              required
+              aria-describedby="company-error"
             >
               <option key="---" value="">
                 ---
@@ -40,6 +45,16 @@ export default function Form({
                 </option>
               ))}
             </select>
+          </div>
+          <div id="company-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.company && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.company[0]}
+              >
+                {state.errors?.company[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Department*/}
@@ -56,7 +71,7 @@ export default function Form({
               name="department"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={""}
-              required
+              aria-describedby="department-error"
             >
               <option key="---" value="">
                 ---
@@ -72,6 +87,16 @@ export default function Form({
                 ))}
             </select>
           </div>
+          <div id="department-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.department && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.department[0]}
+              >
+                {state.errors?.department[0]}
+              </p>
+            )}
+          </div>
         </div>
         {/* Name */}
         <div className="mb-4">
@@ -84,9 +109,18 @@ export default function Form({
               name="name"
               type="text"
               placeholder="Employee's Name"
-              required
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="name-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.name && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.name[0]}
+              >
+                {state.errors?.name[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Email */}
@@ -100,9 +134,19 @@ export default function Form({
               name="email"
               type="email"
               placeholder="Email Address"
-              required
+              aria-describedby="email-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="email-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.email && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.email[0]}
+              >
+                {state.errors?.email[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Phone Number */}
@@ -120,9 +164,19 @@ export default function Form({
               type="tel"
               placeholder="Mobile Number"
               autoComplete="tel"
-              required
+              aria-describedby="mobile-number-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="mobile-number-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.mobile_number && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.mobile_number[0]}
+              >
+                {state.errors?.mobile_number[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Address */}
@@ -136,8 +190,19 @@ export default function Form({
               name="address"
               type="text"
               placeholder="Address"
+              aria-describedby="address-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="address-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.address && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.address[0]}
+              >
+                {state.errors?.address[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Designation */}
@@ -154,8 +219,19 @@ export default function Form({
               name="designation"
               type="text"
               placeholder="Designation"
+              aria-describedby="designation-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="designation-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.designation && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.designation[0]}
+              >
+                {state.errors?.designation[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Status */}
@@ -169,7 +245,7 @@ export default function Form({
               name="status"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={"application_received"}
-              required
+              aria-describedby="status-error"
             >
               <option key="application_received" value="application_received">
                 Application Received
@@ -185,8 +261,28 @@ export default function Form({
               </option>
             </select>
           </div>
+          <div id="status-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.status && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.status[0]}
+              >
+                {state.errors?.status[0]}
+              </p>
+            )}
+          </div>
         </div>
       </div>
+      {/* Form Error */}
+      <div id="form-error" aria-live="polite" aria-atomic="true">
+        {state.errors?.non_field_errors &&
+          state.errors?.non_field_errors.map((error) => (
+            <p className="mt-2 text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
+      </div>
+      {/* Submit or Cancel */}
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/employees"

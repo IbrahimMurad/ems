@@ -1,12 +1,17 @@
+"use client";
+
+import { useActionState } from "react";
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { updateUser } from "@/app/lib/actions";
+import { updateUser, State } from "@/app/lib/actions/user";
 import { user } from "@/app/lib/definitions";
 
 export default function EditUserForm({ user }: { user: user }) {
+  const initialState: State = { errors: {}, message: null };
   const updateUserWithId = updateUser.bind(null, user.id);
+  const [state, formAction] = useActionState(updateUserWithId, initialState);
   return (
-    <form action={updateUserWithId}>
+    <form action={formAction} noValidate>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* username */}
         <div className="mb-4">
@@ -19,8 +24,19 @@ export default function EditUserForm({ user }: { user: user }) {
               name="username"
               type="text"
               defaultValue={user.username}
+              aria-describedby="username-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="username-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.username && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.username[0]}
+              >
+                {state.errors?.username[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Email */}
@@ -34,8 +50,19 @@ export default function EditUserForm({ user }: { user: user }) {
               name="email"
               type="email"
               defaultValue={user.email}
+              aria-describedby="email-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
+          </div>
+          <div id="email-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.email && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.email[0]}
+              >
+                {state.errors?.email[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* Role */}
@@ -48,12 +75,23 @@ export default function EditUserForm({ user }: { user: user }) {
               id="role"
               name="role"
               defaultValue={user.role}
+              aria-describedby="role-error"
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             >
               <option value="admin">Admin</option>
               <option value="manager">Manager</option>
               <option value="employee">Employee</option>
             </select>
+          </div>
+          <div id="role-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.role && (
+              <p
+                className="mt-2 text-sm text-red-500"
+                key={state.errors?.role[0]}
+              >
+                {state.errors?.role[0]}
+              </p>
+            )}
           </div>
         </div>
         {/* <div className="mb-4">
@@ -65,7 +103,6 @@ export default function EditUserForm({ user }: { user: user }) {
               id="password"
               name="password"
               type="password"
-              
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
