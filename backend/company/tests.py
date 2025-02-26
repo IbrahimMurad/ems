@@ -1,11 +1,10 @@
 import uuid
 
+from company.models import Company
+from company.serializers import CompanySerializer
 from django.core.exceptions import ValidationError
 from django.test import RequestFactory, TestCase
 from rest_framework.test import APITestCase
-
-from company.models import Company
-from company.serializers import CompanySerializer
 from user_account.models import User
 
 

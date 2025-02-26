@@ -14,11 +14,23 @@ class WriteEmployeeSerializer(serializers.ModelSerializer):
             "days_employed",
         ]
 
+    def validate_status(self, value):
+        if self.instance.status != value:
+            if (
+                self.instance.status == Employee.StatusChoices.APPLICATION_RECEIVED
+                and value == Employee.StatusChoices.HIRED
+            ):
+                raise serializers.ValidationError(message="Employee must be interviewed before hiring", code="invalid")
+        return value
+
+    def validate_company(self, value):
+        if self.instance.company != self.instance.department.company:
+            raise serializers.ValidationError(message="The department must be related to the company", code="invalid")
+        return value
+
 
 class ReadEmployeeSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="employee-detail", lookup_field="pk"
-    )
+    url = serializers.HyperlinkedIdentityField(view_name="employee-detail", lookup_field="pk")
 
     class Meta:
         model = Employee

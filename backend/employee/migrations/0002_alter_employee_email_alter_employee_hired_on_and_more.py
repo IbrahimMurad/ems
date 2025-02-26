@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="employee",
             name="mobile_number",
-            field=models.CharField(
-                max_length=20, validators=[employee.models.MobileNumberValidator()]
-            ),
+            field=models.CharField(max_length=20, validators=[employee.models.MobileNumberValidator()]),
         ),
         migrations.AlterField(
             model_name="employee",

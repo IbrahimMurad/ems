@@ -35,9 +35,7 @@ class ObtainToken(views.TokenObtainPairView):
             response = super().post(request, *args, **kwargs)
             return set_tokens(response)
         except Exception:
-            return Response(
-                {"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RefreshToken(views.TokenRefreshView):
@@ -66,9 +64,7 @@ class RefreshToken(views.TokenRefreshView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         except Exception:
-            return Response(
-                {"detail": "Token refresh failed"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"detail": "Token refresh failed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Logout(APIView):

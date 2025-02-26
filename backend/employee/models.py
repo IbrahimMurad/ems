@@ -52,9 +52,7 @@ class Employee(BaseModel):
     )
     name = models.CharField(max_length=200, db_index=True)
     email = models.EmailField(db_index=True)
-    mobile_number = models.CharField(
-        max_length=20, validators=[mobile_number_validator]
-    )
+    mobile_number = models.CharField(max_length=20, validators=[mobile_number_validator])
     address = models.CharField(max_length=265)
     designation = models.CharField(max_length=265)
     hired_on = models.DateTimeField(null=True, blank=True)
@@ -67,33 +65,6 @@ class Employee(BaseModel):
 
     def __str__(self) -> str:
         return self.name
-
-    def clean(self) -> None:
-        if self.department.company != self.company:
-            raise ValidationError(
-                message="The department must be related to the company", code="invalid"
-            )
-
-        # Ensure the correct flow of status changes
-        # From Application Received to Interview Scheduled
-        # From Application Received to Not Accepted
-        # From Interview Scheduled to Hired or Not Accepted
-        # From Hired to Not Accepted (for termination)
-        # From Not Accepted to Application Received (for re-application)
-        try:
-            old_employee = Employee.objects.get(pk=self.pk)
-            if old_employee.status != self.status:
-                if (
-                    old_employee.status == self.StatusChoices.APPLICATION_RECEIVED
-                    and self.status == self.StatusChoices.HIRED
-                ):
-                    raise ValidationError(
-                        message="Employee must be interviewed before hiring",
-                        code="invalid",
-                    )
-        except Employee.DoesNotExist:
-            pass
-        return super().clean()
 
     def save(self, *args, **kwargs) -> None:
         """

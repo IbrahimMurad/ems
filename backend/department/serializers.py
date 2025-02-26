@@ -10,9 +10,7 @@ class WriteDepartmentSerializer(serializers.ModelSerializer):
 
 
 class ReadDepartmentSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="department-detail", lookup_field="pk"
-    )
+    url = serializers.HyperlinkedIdentityField(view_name="department-detail", lookup_field="pk")
 
     class Meta:
         model = Department

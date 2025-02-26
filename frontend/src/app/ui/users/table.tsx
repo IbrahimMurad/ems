@@ -41,7 +41,7 @@ export default async function UsersTable({ users }: { users: user[] }) {
                   <td className="truncate px-3 py-3">{user.last_login}</td>
                   <td className="px-3 py-3 text-right text-sm font-medium flex justify-end gap-2">
                     <Link
-                      href="#"
+                      href={`/users/${user.id}/edit`}
                       className="text-gray-800 hover:text-indigo-800  hover:scale-110"
                     >
                       <span className="sr-only">{`Edit ${user.username}`}</span>

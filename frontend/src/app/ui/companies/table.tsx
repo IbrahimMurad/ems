@@ -45,7 +45,7 @@ export default async function CompaniesTable({
                   </td>
                   <td className="px-3 py-3 text-right text-sm font-medium flex justify-end gap-2">
                     <Link
-                      href="#"
+                      href={`/companies/${company.id}/edit`}
                       className="text-gray-800 hover:text-indigo-800  hover:scale-110"
                     >
                       <span className="sr-only">{`Edit ${company.name}`}</span>

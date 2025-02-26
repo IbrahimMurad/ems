@@ -9,9 +9,7 @@ def update_number_of_employees(instance) -> None:
     """
     department = instance.department
 
-    employees_in_department = department.employees.filter(
-        status=Employee.StatusChoices.HIRED
-    ).count()
+    employees_in_department = department.employees.filter(status=Employee.StatusChoices.HIRED).count()
     department.number_of_employees = employees_in_department
     department.save()
 

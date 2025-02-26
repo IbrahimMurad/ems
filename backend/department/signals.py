@@ -11,9 +11,9 @@ def update_number_of_departments_on_create(sender, instance, **kwargs) -> None:
     """
     company = instance.company
     company.number_of_departments = instance.company.departments.count()
-    company.number_of_employees = company.departments.aggregate(
-        total_employees=Sum("number_of_employees")
-    )["total_employees"]
+    company.number_of_employees = company.departments.aggregate(total_employees=Sum("number_of_employees"))[
+        "total_employees"
+    ]
     company.save()
 
 
@@ -24,7 +24,7 @@ def update_number_of_departments_on_delete(sender, instance, **kwargs) -> None:
     """
     company = instance.company
     company.number_of_departments = instance.company.departments.count()
-    company.number_of_employees = company.departments.aggregate(
-        total_employees=Sum("number_of_employees")
-    )["total_employees"]
+    company.number_of_employees = company.departments.aggregate(total_employees=Sum("number_of_employees"))[
+        "total_employees"
+    ]
     company.save()

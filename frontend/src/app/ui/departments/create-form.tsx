@@ -16,7 +16,7 @@ export default function Form({ companies }: { companies: company[] }) {
             <select
               id="company"
               name="company"
-              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={""}
             >
               <option key="---" value="">

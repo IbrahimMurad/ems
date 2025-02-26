@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { createUser } from "@/app/lib/actions";
+import { updateUser } from "@/app/lib/actions";
+import { user } from "@/app/lib/definitions";
 
-export default function Form() {
+export default function EditUserForm({ user }: { user: user }) {
+  const updateUserWithId = updateUser.bind(null, user.id);
   return (
-    <form action={createUser}>
+    <form action={updateUserWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* username */}
         <div className="mb-4">
@@ -16,8 +18,7 @@ export default function Form() {
               id="username"
               name="username"
               type="text"
-              placeholder="username"
-              autoComplete="username"
+              defaultValue={user.username}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -32,8 +33,7 @@ export default function Form() {
               id="email"
               name="email"
               type="email"
-              placeholder="Email"
-              autoComplete="email"
+              defaultValue={user.email}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -47,7 +47,7 @@ export default function Form() {
             <select
               id="role"
               name="role"
-              defaultValue={"employee"}
+              defaultValue={user.role}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             >
               <option value="admin">Admin</option>
@@ -56,8 +56,7 @@ export default function Form() {
             </select>
           </div>
         </div>
-        {/* Password */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="password" className="mb-2 block text-sm font-medium">
             Password:
           </label>
@@ -66,13 +65,11 @@ export default function Form() {
               id="password"
               name="password"
               type="password"
-              placeholder="Password"
-              autoComplete="new-password"
+              
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
         </div>
-        {/* Confirm Password */}
         <div className="mb-4">
           <label
             htmlFor="confirm-password"
@@ -90,7 +87,7 @@ export default function Form() {
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
@@ -99,7 +96,7 @@ export default function Form() {
         >
           Cancel
         </Link>
-        <Button type="submit">Create User</Button>
+        <Button type="submit">Update User</Button>
       </div>
     </form>
   );

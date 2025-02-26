@@ -3,9 +3,7 @@ from rest_framework import serializers
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name="company-detail", lookup_field="pk"
-    )
+    url = serializers.HyperlinkedIdentityField(view_name="company-detail", lookup_field="pk")
 
     class Meta:
         model = Company

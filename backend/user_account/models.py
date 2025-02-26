@@ -31,9 +31,7 @@ class User(AbstractUser):
         validators=[AbstractUser.username_validator],
     )
 
-    role = models.CharField(
-        "role", max_length=20, choices=RoleChoices.choices, default=RoleChoices.EMPLOYEE
-    )
+    role = models.CharField("role", max_length=20, choices=RoleChoices.choices, default=RoleChoices.EMPLOYEE)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

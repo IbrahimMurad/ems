@@ -2,20 +2,25 @@
 
 import Link from "next/link";
 import { Button } from "@/app/ui/button";
-import { company, department } from "@/app/lib/definitions";
-import { createEmployee } from "@/app/lib/actions";
+import { employee, department, company } from "@/app/lib/definitions";
+import { updateEmployee } from "@/app/lib/actions";
 import { useState } from "react";
 
-export default function Form({
+export default function EditEmployeeForm({
+  employee,
   companies,
   departments,
 }: {
+  employee: employee;
   companies: company[];
   departments: department[];
 }) {
-  const [selectedCompany, setSelectedCompany] = useState<string>("");
+  const updateEmployeeWithId = updateEmployee.bind(null, employee.id);
+  const [selectedCompany, setSelectedCompany] = useState<string>(
+    employee.company.id
+  );
   return (
-    <form action={createEmployee}>
+    <form action={updateEmployeeWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Comapny*/}
         <div className="mb-4">
@@ -29,7 +34,6 @@ export default function Form({
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
               value={selectedCompany}
               onChange={(e) => setSelectedCompany(e.target.value)}
-              required
             >
               <option key="---" value="">
                 ---
@@ -55,8 +59,7 @@ export default function Form({
               id="department"
               name="department"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={""}
-              required
+              defaultValue={employee.department.id}
             >
               <option key="---" value="">
                 ---
@@ -83,8 +86,7 @@ export default function Form({
               id="name"
               name="name"
               type="text"
-              placeholder="Employee's Name"
-              required
+              defaultValue={employee.name}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -99,8 +101,7 @@ export default function Form({
               id="email"
               name="email"
               type="email"
-              placeholder="Email Address"
-              required
+              defaultValue={employee.email}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -118,9 +119,8 @@ export default function Form({
               id="mobile-number"
               name="mobile_number"
               type="tel"
-              placeholder="Mobile Number"
+              defaultValue={employee.mobile_number}
               autoComplete="tel"
-              required
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -135,7 +135,7 @@ export default function Form({
               id="address"
               name="address"
               type="text"
-              placeholder="Address"
+              defaultValue={employee.address}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -153,7 +153,7 @@ export default function Form({
               id="designation"
               name="designation"
               type="text"
-              placeholder="Designation"
+              defaultValue={employee.designation}
               className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
             />
           </div>
@@ -168,8 +168,7 @@ export default function Form({
               id="status"
               name="status"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={"application_received"}
-              required
+              defaultValue={employee.status}
             >
               <option key="application_received" value="application_received">
                 Application Received
@@ -186,6 +185,82 @@ export default function Form({
             </select>
           </div>
         </div>
+
+        {/* Hired on */}
+        <div className="mb-4">
+          <label htmlFor="hired-on" className="mb-2 block text-sm font-medium">
+            Hired on:
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <input
+              id="hired-on"
+              name="hired_on"
+              type="text"
+              disabled
+              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue={employee.hired_on}
+            />
+          </div>
+        </div>
+        {/* Days employed */}
+        <div className="mb-4">
+          <label
+            htmlFor="days-employed"
+            className="mb-2 block text-sm font-medium"
+          >
+            Days Employed:
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <input
+              id="days-employed"
+              name="days_employed"
+              type="text"
+              disabled
+              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue={employee.days_employed}
+            />
+          </div>
+        </div>
+
+        {/* Created at */}
+        <div className="mb-4">
+          <label
+            htmlFor="created-at"
+            className="mb-2 block text-sm font-medium"
+          >
+            Created at:
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <input
+              id="created-at"
+              name="created_at"
+              type="text"
+              disabled
+              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue={employee.created_at}
+            />
+          </div>
+        </div>
+
+        {/* Last updated */}
+        <div className="mb-4">
+          <label
+            htmlFor="updated-at"
+            className="mb-2 block text-sm font-medium"
+          >
+            Last updated:
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <input
+              id="updated-at"
+              name="updated_at"
+              type="text"
+              disabled
+              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue={employee.updated_at}
+            />
+          </div>
+        </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
@@ -194,7 +269,7 @@ export default function Form({
         >
           Cancel
         </Link>
-        <Button type="submit">Create Employee</Button>
+        <Button type="submit">Edit Employee</Button>
       </div>
     </form>
   );

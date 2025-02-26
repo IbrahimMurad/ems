@@ -80,7 +80,7 @@ export default function EmployeesTable({
                   </td>
                   <td className="p-3 text-right text-sm font-medium flex justify-end gap-2">
                     <Link
-                      href="#"
+                      href={`/employees/${employee.id}/edit`}
                       className="text-gray-800 hover:text-blue-700  hover:scale-110"
                     >
                       <span className="sr-only">{`Edit ${employee.name}`}</span>

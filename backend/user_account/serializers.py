@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from user_account.models import User
 
 
@@ -26,6 +25,12 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "password": {"write_only": True},
         }
+
+    def validate(self, attrs):
+        # Remove password if it is empty when updating
+        if self.instance and "password" in attrs and not attrs["password"]:
+            attrs.pop("password")
+        return super().validate(attrs)
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)

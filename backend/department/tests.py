@@ -53,18 +53,10 @@ class DepartmentModelTest(TestCase):
     def test_department_model_default_ordering(self) -> None:
         Company.objects.create(name="Company 2")
         Company.objects.create(name="Company 3")
-        Department.objects.create(
-            company=Company.objects.get(name="Company 2"), name="Department 1"
-        )
-        Department.objects.create(
-            company=Company.objects.get(name="Company 2"), name="Department 2"
-        )
-        Department.objects.create(
-            company=Company.objects.get(name="Company 3"), name="Department 1"
-        )
-        Department.objects.create(
-            company=Company.objects.get(name="Company 3"), name="Department 2"
-        )
+        Department.objects.create(company=Company.objects.get(name="Company 2"), name="Department 1")
+        Department.objects.create(company=Company.objects.get(name="Company 2"), name="Department 2")
+        Department.objects.create(company=Company.objects.get(name="Company 3"), name="Department 1")
+        Department.objects.create(company=Company.objects.get(name="Company 3"), name="Department 2")
         departments = Department.objects.all()
         self.assertEqual(departments[0].company.name, "Company 1")
         self.assertEqual(departments[1].company.name, "Company 2")
@@ -117,9 +109,7 @@ class DepartmentSerializerTest(APITestCase):
         self.request = RequestFactory().get("/")
 
     def test_department_serializer(self) -> None:
-        serializer = DepartmentSerializer(
-            self.department, context={"request": self.request}
-        )
+        serializer = DepartmentSerializer(self.department, context={"request": self.request})
         self.assertEqual(
             set(serializer.data.keys()),
             {
@@ -362,9 +352,7 @@ class DepartmentViewSetTest(APITestCase):
         data = {
             "name": "Department 2",
         }
-        response = self.client.patch(
-            f"/api/departments/{self.department.id}/", data=data
-        )
+        response = self.client.patch(f"/api/departments/{self.department.id}/", data=data)
         self.assertEqual(response.status_code, 200)
         self.department.refresh_from_db()
         self.assertEqual(self.department.name, "Department 2")
@@ -372,9 +360,7 @@ class DepartmentViewSetTest(APITestCase):
         data = {
             "number_of_employees": 3,
         }
-        response = self.client.patch(
-            f"/api/departments/{self.department.id}/", data=data
-        )
+        response = self.client.patch(f"/api/departments/{self.department.id}/", data=data)
         self.assertEqual(response.status_code, 200)
         self.department.refresh_from_db()
         self.assertEqual(self.department.number_of_employees, 0)
@@ -384,9 +370,7 @@ class DepartmentViewSetTest(APITestCase):
         data = {
             "name": "Department 2",
         }
-        response = self.client.patch(
-            f"/api/departments/{self.department.id}/", data=data
-        )
+        response = self.client.patch(f"/api/departments/{self.department.id}/", data=data)
         self.assertEqual(response.status_code, 403)
         self.department.refresh_from_db()
         self.assertEqual(self.department.name, "Department 1")
@@ -394,9 +378,7 @@ class DepartmentViewSetTest(APITestCase):
         data = {
             "number_of_employees": 3,
         }
-        response = self.client.patch(
-            f"/api/departments/{self.department.id}/", data=data
-        )
+        response = self.client.patch(f"/api/departments/{self.department.id}/", data=data)
         self.assertEqual(response.status_code, 403)
         self.department.refresh_from_db()
         self.assertEqual(self.department.number_of_employees, 0)
