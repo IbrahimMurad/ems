@@ -3,6 +3,7 @@ import CompaniesTable from "@/app/ui/companies/table";
 import Search from "@/app/ui/Search";
 import { CreateButton } from "@/app/ui/buttons";
 import Pagination from "@/app/ui/pagination";
+import { companiesList } from "@/app/lib/definitions";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -20,9 +21,9 @@ export default async function Page(props: {
         <Search placeholder="Search companies..." />
         <CreateButton href="/companies/create" model="Company" />
       </div>
-      <CompaniesTable companies={companies.results} />
+      <CompaniesTable companies={(companies as companiesList).results} />
       <div className="mt-5 flex w-full justify-center">
-        <Pagination count={companies.count} />
+        <Pagination count={(companies as companiesList).count} />
       </div>
     </div>
   );
