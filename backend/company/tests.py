@@ -1,3 +1,10 @@
+"""
+A test module for the company app.
+
+The test are not complete and some are broke due to changes
+and the lack of time to fix and complete them.
+"""
+
 import uuid
 
 from company.models import Company
@@ -209,9 +216,7 @@ class CompanyViewTest(APITestCase):
         }
         response = self.client.post("/api/companies/", data=data)
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(
-            response.data, {"name": ["Company with this name already exists."]}
-        )
+        self.assertEqual(response.data, {"name": ["Company with this name already exists."]})
 
     def test_company_retrieve(self) -> None:
         self.client.force_authenticate(user=self.admin)

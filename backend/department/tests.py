@@ -1,11 +1,17 @@
-import uuid
+"""
+A test module for the department app.
 
-from django.core.exceptions import ValidationError
-from django.test import RequestFactory, TestCase
-from rest_framework.test import APITestCase
+The test are not complete and some are broke due to changes
+and the lack of time to fix and complete them.
+"""
+
+import uuid
 
 from department.models import Company, Department
 from department.serializers import DepartmentSerializer
+from django.core.exceptions import ValidationError
+from django.test import RequestFactory, TestCase
+from rest_framework.test import APITestCase
 from user_account.models import User
 
 
