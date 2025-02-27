@@ -121,3 +121,10 @@ export async function login(email: string, password: string) {
     return detail;
   }
 }
+
+export async function logout() {
+  const cookieStore = await cookies();
+  cookieStore.delete(ACCESS_TOKEN_KEY);
+  cookieStore.delete(REFRESH_TOKEN_KEY);
+  redirect("/login");
+}
