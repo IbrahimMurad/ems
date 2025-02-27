@@ -6,12 +6,7 @@ import {
   fetchDepartments,
   fetchEmployees,
 } from "../lib/data";
-import {
-  companiesList,
-  departmentsList,
-  employeesList,
-  usersList,
-} from "../lib/definitions";
+import Breadcrumbs from "@/app/ui/breadcrumbs";
 
 export default async function HomePage() {
   const users = await fetchUsers();
@@ -24,34 +19,58 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="grid place-items-center bg-white p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg min-w-72">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold">Users</h2>
-            <p className="text-sm mt-2">Total: {(users as usersList).count}</p>
-          </div>
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold">Companies</h2>
-            <p className="text-sm mt-2">
-              Total: {(companies as companiesList).count}
-            </p>
-          </div>
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold">Departments</h2>
-            <p className="text-sm mt-2">
-              Total: {(departments as departmentsList).count}
-            </p>
-          </div>
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-bold">Employees</h2>
-            <p className="text-sm mt-2">
-              Total: {(employees as employeesList).count}
-            </p>
-          </div>
+    <main>
+      <Breadcrumbs breadcrumbs={[{ label: "Dashboard", href: "/" }]} />
+      <div className="flex justify-center md:justify-start flex-wrap gap-4">
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Hired</h2>
+          <p className="text-4xl pt-4 text-center font-bold">
+            {
+              employees.results.filter(
+                (employee) => employee.status === "hired"
+              ).length
+            }
+          </p>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Interview Scheduled</h2>
+          <p className="text-4xl pt-4 text-center font-bold">
+            {
+              employees.results.filter(
+                (employee) => employee.status === "interview_scheduled"
+              ).length
+            }
+          </p>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Application Received</h2>
+          <p className="text-4xl pt-4 text-center font-bold">
+            {
+              employees.results.filter(
+                (employee) => employee.status === "application_received"
+              ).length
+            }
+          </p>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Total Employees</h2>
+          <p className="text-4xl  pt-4 text-center font-bold">
+            {employees.count}
+          </p>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Companies</h2>
+          <p className="text-4xl  pt-4 text-center font-bold">
+            {companies.count}
+          </p>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-64 flex flex-col justify-between">
+          <h2 className="text-xl font-bold">Departments</h2>
+          <p className="text-4xl  pt-4 text-center font-bold">
+            {departments.count}
+          </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
