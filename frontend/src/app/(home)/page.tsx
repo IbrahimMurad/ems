@@ -1,4 +1,5 @@
 import * as React from "react";
+import { notFound } from "next/navigation";
 import {
   fetchUsers,
   fetchCompanies,
@@ -17,6 +18,11 @@ export default async function HomePage() {
   const companies = await fetchCompanies();
   const departments = await fetchDepartments();
   const employees = await fetchEmployees();
+
+  if (!users || !companies || !departments || !employees) {
+    notFound();
+  }
+
   return (
     <div className="grid place-items-center bg-white p-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg min-w-72">

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
@@ -86,7 +86,7 @@ export async function request(
   });
 
   // Handle various response cases
-  if (response.ok || response.status === 400) {
+  if (response.ok || response.status === 400 || response.status === 404) {
     return response;
   }
 
@@ -94,10 +94,6 @@ export async function request(
     // Token is invalid, middleware should have handled this
     // If we get here, the refresh token is likely invalid
     redirect("/login");
-  }
-
-  if (response.status === 404) {
-    notFound();
   }
 
   if (response.status === 403) {

@@ -25,6 +25,9 @@ export async function fetchUsers(
       (search ? `&search=${search}` : "");
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const users = await response.json();
     users.results = users.results.map((user: user) => ({
       ...user,
@@ -44,6 +47,9 @@ export async function retrieveUser(id: string): Promise<user | null> {
     const response = await request(url, method);
 
     const user = await response.json();
+    if (response.status === 404) {
+      return null;
+    }
     user.date_joined = isoToLocaleDate(user.date_joined);
     user.last_login = user.last_login ? isoToLocaleDate(user.last_login) : "-";
     return user;
@@ -63,6 +69,9 @@ export async function fetchCompanies(
       (search ? `&search=${search}` : "");
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const companies = await response.json();
     return companies;
   } catch (error) {
@@ -75,6 +84,9 @@ export async function retrieveCompany(id: string): Promise<company | null> {
     const url = `${urls.companies}${id}/`;
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const company = await response.json();
     company.created_at = isoToLocaleDate(company.created_at);
     company.updated_at = isoToLocaleDate(company.updated_at);
@@ -95,6 +107,9 @@ export async function fetchDepartments(
       (search ? `&search=${search}` : "");
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const department = await response.json();
     return department;
   } catch (error) {
@@ -109,6 +124,9 @@ export async function retrieveDepartment(
     const url = `${urls.departments}${id}/`;
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const department = await response.json();
     department.created_at = isoToLocaleDate(department.created_at);
     department.updated_at = isoToLocaleDate(department.updated_at);
@@ -129,6 +147,9 @@ export async function fetchEmployees(
       (search ? `&search=${search}` : "");
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const employees = await response.json();
     employees.results = employees.results.map((employee: employee) => ({
       ...employee,
@@ -147,6 +168,9 @@ export async function retrieveEmployee(id: string): Promise<employee | null> {
     const url = `${urls.employees}${id}/`;
     const method = "GET";
     const response = await request(url, method);
+    if (response.status === 404) {
+      return null;
+    }
     const employee = await response.json();
     employee.created_at = isoToLocaleDate(employee.created_at);
     employee.updated_at = isoToLocaleDate(employee.updated_at);
