@@ -1,6 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import DeleteItem from "@/app/ui/DeleteItem";
 import { company } from "@/app/lib/definitions";
 
 export default async function CompaniesTable({
@@ -58,7 +57,6 @@ export default async function CompaniesTable({
                       <span className="sr-only">{`Edit ${company.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={company.url} />
                   </div>
                 </div>
               </div>
@@ -106,7 +104,6 @@ export default async function CompaniesTable({
                       <span className="sr-only">{`Edit ${company.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={company.url} />
                   </td>
                 </tr>
               ))}

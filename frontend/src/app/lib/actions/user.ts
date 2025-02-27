@@ -127,3 +127,17 @@ export async function updateUser(
   revalidatePath(`/users/${id}/edit`);
   redirect(`/users/${id}/edit`);
 }
+
+/**
+ * Delete a user
+ * @param {number} id - User ID
+ * @returns {Promise<void>}
+ */
+
+export async function deleteUser(id: number): Promise<void> {
+  const url = `${urls.users}${id}/`;
+  const method = "DELETE";
+  await request(url, method);
+  revalidatePath("/users");
+  redirect("/users");
+}

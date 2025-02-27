@@ -1,6 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import DeleteItem from "@/app/ui/DeleteItem";
 import { department } from "@/app/lib/definitions";
 
 export default async function DepartmentsTable({
@@ -53,7 +52,6 @@ export default async function DepartmentsTable({
                       <span className="sr-only">{`Edit ${department.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={department.url} />
                   </div>
                 </div>
               </div>
@@ -106,7 +104,6 @@ export default async function DepartmentsTable({
                       <span className="sr-only">{`Edit ${department.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={department.url} />
                   </td>
                 </tr>
               ))}

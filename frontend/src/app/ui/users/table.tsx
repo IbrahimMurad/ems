@@ -1,6 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import DeleteItem from "@/app/ui/DeleteItem";
 import { user } from "@/app/lib/definitions";
 import { capitalize } from "@/app/lib/utils";
 
@@ -39,13 +38,12 @@ export default async function UsersTable({ users }: { users: user[] }) {
                   </div>
                   <div className="flex justify-end gap-2">
                     <Link
-                      href={`/departments/${user.id}/edit`}
+                      href={`/users/${user.id}/edit`}
                       className="text-gray-800 hover:text-indigo-800  hover:scale-110"
                     >
                       <span className="sr-only">{`Edit ${user.username}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={user.url} />
                   </div>
                 </div>
               </div>
@@ -99,7 +97,6 @@ export default async function UsersTable({ users }: { users: user[] }) {
                       <span className="sr-only">{`Edit ${user.username}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={user.url} />
                   </td>
                 </tr>
               ))}

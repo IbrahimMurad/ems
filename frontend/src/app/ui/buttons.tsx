@@ -1,4 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { ArrowLeftIcon, PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import clsx from "clsx";
@@ -54,5 +55,17 @@ export function GoBackButton({ href }: { href: string }) {
       <ArrowLeftIcon className=" mr-2 h-5 w-5" aria-hidden="true" />
       Go back
     </Link>
+  );
+}
+
+export function DeleteButton() {
+  return (
+    <button
+      type="submit"
+      className="rounded-lg px-6 py-2 bg-red-900 text-lg font-bold text-gray-100 hover:bg-red-700"
+    >
+      <TrashIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
+      Delete
+    </button>
   );
 }

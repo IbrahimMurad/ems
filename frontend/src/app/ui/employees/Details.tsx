@@ -4,8 +4,12 @@ import Link from "next/link";
 import { PencilIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { employee } from "@/app/lib/definitions";
 import { statusStyles } from "@/app/lib/definitions";
+import { DeleteButton } from "@/app/ui/buttons";
+import { deleteEmployee } from "@/app/lib/actions/employee";
 
 export default function EmployeeDetails({ employee }: { employee: employee }) {
+  const deleteEmployeeWithId = deleteEmployee.bind(null, employee.id);
+
   return (
     <>
       <div className="mt-6 flex justify-end gap-4 mb-4">
@@ -95,6 +99,12 @@ export default function EmployeeDetails({ employee }: { employee: employee }) {
         <p className="text-sm font-medium mt-3 sm:mt-0">Hired at: </p>
         <strong className="ml-4 sm:ml-0">{employee.hired_on}</strong>
       </div>
+      <form
+        action={deleteEmployeeWithId}
+        className="mt-6 flex justify-end gap-4 mb-4"
+      >
+        <DeleteButton />
+      </form>
     </>
   );
 }

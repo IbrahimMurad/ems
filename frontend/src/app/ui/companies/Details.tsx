@@ -2,8 +2,12 @@
 
 import { company } from "@/app/lib/definitions";
 import { GoBackButton, EditButton } from "@/app/ui/buttons";
+import { DeleteButton } from "@/app/ui/buttons";
+import { deleteCompany } from "@/app/lib/actions/company";
 
 export default function CompanyDetails({ company }: { company: company }) {
+  const deleteCompanyWithId = deleteCompany.bind(null, company.id);
+
   return (
     <>
       <div className="mt-6 flex justify-end gap-4 mb-4">
@@ -31,6 +35,12 @@ export default function CompanyDetails({ company }: { company: company }) {
         <span className="mb-2 text-sm font-medium">Total employees : </span>
         <strong>{company.number_of_employees}</strong>
       </div>
+      <form
+        action={deleteCompanyWithId}
+        className="mt-6 flex justify-end gap-4 mb-4"
+      >
+        <DeleteButton />
+      </form>
     </>
   );
 }

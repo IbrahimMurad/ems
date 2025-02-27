@@ -3,12 +3,16 @@
 import Link from "next/link";
 import { PencilIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { department } from "@/app/lib/definitions";
+import { DeleteButton } from "@/app/ui/buttons";
+import { deleteDepartment } from "@/app/lib/actions/department";
 
 export default function DepartmentDetails({
   department,
 }: {
   department: department;
 }) {
+  const deleteDepartmentWithId = deleteDepartment.bind(null, department.id);
+
   return (
     <>
       <div className="mt-6 flex justify-end gap-4 mb-4">
@@ -50,6 +54,12 @@ export default function DepartmentDetails({
         <span className="mb-2 text-sm font-medium">Total employees : </span>
         <strong>{department.number_of_employees}</strong>
       </div>
+      <form
+        action={deleteDepartmentWithId}
+        className="mt-6 flex justify-end gap-4 mb-4"
+      >
+        <DeleteButton />
+      </form>
     </>
   );
 }

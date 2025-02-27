@@ -137,3 +137,18 @@ export async function updateEmployee(
   revalidatePath(`/employees/${id}`);
   redirect(`/employees/${id}`);
 }
+
+/**
+ * Delete a employee
+ * @param {string} id - Employee id
+ * @returns {Promise<void>}
+ */
+
+export async function deleteEmployee(id: string): Promise<void> {
+  const url = `${urls.employees}${id}/`;
+  const response = await request(url, "DELETE");
+  if (response.ok) {
+    revalidatePath("/employees");
+    redirect("/employees");
+  }
+}

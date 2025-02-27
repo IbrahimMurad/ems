@@ -128,3 +128,18 @@ export async function updateDepartment(
   revalidatePath(`/departments/${id}`);
   redirect(`/departments/${id}`);
 }
+
+/**
+ * Delete a department
+ * @param {string} id - Department id
+ * @returns {Promise<void>}
+ */
+
+export async function deleteDepartment(id: string): Promise<void> {
+  const url = `${urls.departments}${id}/`;
+  const response = await request(url, "DELETE");
+  if (response.ok) {
+    revalidatePath("/departments");
+    redirect("/departments");
+  }
+}

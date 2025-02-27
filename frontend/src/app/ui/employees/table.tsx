@@ -3,7 +3,6 @@ import { employee } from "@/app/lib/definitions";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { statusStyles } from "@/app/lib/definitions";
-import DeleteItem from "@/app/ui/DeleteItem";
 
 export default function EmployeesTable({
   employees,
@@ -65,7 +64,6 @@ export default function EmployeesTable({
                       <span className="sr-only">{`Edit ${employee.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={employee.url} />
                   </div>
                 </div>
               </div>
@@ -134,7 +132,6 @@ export default function EmployeesTable({
                       <span className="sr-only">{`Edit ${employee.name}`}</span>
                       <PencilIcon className="h-6 w-6" aria-hidden="true" />
                     </Link>
-                    <DeleteItem url={employee.url} />
                   </td>
                 </tr>
               ))}

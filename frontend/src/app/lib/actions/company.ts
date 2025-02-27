@@ -108,3 +108,18 @@ export async function updateCompany(
   revalidatePath(`/companies/${id}`);
   redirect(`/companies/${id}`);
 }
+
+/**
+ * Delete a company
+ * @param {string} id - Company id
+ * @returns {Promise<void>}
+ */
+
+export async function deleteCompany(id: string): Promise<void> {
+  const url = `${urls.companies}${id}/`;
+  const response = await request(url, "DELETE");
+  if (response.ok) {
+    revalidatePath("/companies");
+    redirect("/companies");
+  }
+}

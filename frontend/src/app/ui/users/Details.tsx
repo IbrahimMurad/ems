@@ -3,8 +3,11 @@
 import { GoBackButton, EditButton } from "@/app/ui/buttons";
 import { user } from "@/app/lib/definitions";
 import { capitalize } from "@/app/lib/utils";
+import { deleteUser } from "@/app/lib/actions/user";
+import { DeleteButton } from "@/app/ui/buttons";
 
 export default function UserDetails({ user }: { user: user }) {
+  const deleteUserWithId = deleteUser.bind(null, user.id);
   return (
     <>
       <div className="mt-6 flex justify-end gap-4 mb-4">
@@ -32,6 +35,12 @@ export default function UserDetails({ user }: { user: user }) {
         <span className="mb-2 text-sm font-medium">Joined at : </span>
         <strong>{user.date_joined}</strong>
       </div>
+      <form
+        action={deleteUserWithId}
+        className="mt-6 flex justify-end gap-4 mb-4"
+      >
+        <DeleteButton />
+      </form>
     </>
   );
 }
