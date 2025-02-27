@@ -20,7 +20,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           { label: "Companies", href: "/companies" },
           {
             label: `${company.name}`,
-            href: `/companies/${company.name}`,
+            href: `/companies/${company.id}`,
             active: true,
           },
         ]}

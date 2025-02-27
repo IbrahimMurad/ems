@@ -24,9 +24,7 @@ export default function Error({
   };
 
   useEffect(() => {
-    if (error.message === "unauthenticated") {
-      redirect("/login");
-    }
+    console.error(error);
   }, [error]);
 
   return (

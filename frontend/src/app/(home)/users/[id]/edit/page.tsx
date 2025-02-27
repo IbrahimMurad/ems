@@ -17,7 +17,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           { label: "Users", href: "/users" },
           {
             label: `${user.username}`,
-            href: `/users/${user.username}`,
+            href: `/users/${user.id}`,
           },
           {
             label: "edit",
