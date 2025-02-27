@@ -1,11 +1,14 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { department } from "@/app/lib/definitions";
+import { authenticatedUser } from "@/app/lib/definitions";
 
 export default async function DepartmentsTable({
   departments,
+  user,
 }: {
   departments: department[];
+  user: authenticatedUser;
 }) {
   return (
     <div className="mt-6 flow-root">
@@ -44,15 +47,17 @@ export default async function DepartmentsTable({
                       </span>
                     </p>
                   </div>
-                  <div className="flex justify-end gap-2">
-                    <Link
-                      href={`/departments/${department.id}/edit`}
-                      className="text-gray-800 hover:text-indigo-800  hover:scale-110"
-                    >
-                      <span className="sr-only">{`Edit ${department.name}`}</span>
-                      <PencilIcon className="h-6 w-6" aria-hidden="true" />
-                    </Link>
-                  </div>
+                  {user.role !== "employee" && (
+                    <div className="flex justify-end gap-2">
+                      <Link
+                        href={`/departments/${department.id}/edit`}
+                        className="text-gray-800 hover:text-indigo-800  hover:scale-110"
+                      >
+                        <span className="sr-only">{`Edit ${department.name}`}</span>
+                        <PencilIcon className="h-6 w-6" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -69,9 +74,11 @@ export default async function DepartmentsTable({
                 <th scope="col" className="px-3 py-5">
                   Employees
                 </th>
-                <th scope="col" className="relative py-3 pl-2 pr-2">
-                  <span className="sr-only">Edit</span>
-                </th>
+                {user.role !== "employee" && (
+                  <th scope="col" className="relative py-3 pl-2 pr-2">
+                    <span className="sr-only">Edit</span>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className="bg-white rounded-lg divide-y-2 divide-gray-100">
@@ -97,13 +104,15 @@ export default async function DepartmentsTable({
                     {department.number_of_employees}
                   </td>
                   <td className="px-3 py-3 text-right text-sm font-medium flex justify-end gap-2">
-                    <Link
-                      href={`/departments/${department.id}/edit`}
-                      className="text-gray-800 hover:text-indigo-800  hover:scale-110"
-                    >
-                      <span className="sr-only">{`Edit ${department.name}`}</span>
-                      <PencilIcon className="h-6 w-6" aria-hidden="true" />
-                    </Link>
+                    {user.role !== "employee" && (
+                      <Link
+                        href={`/departments/${department.id}/edit`}
+                        className="text-gray-800 hover:text-indigo-800  hover:scale-110"
+                      >
+                        <span className="sr-only">{`Edit ${department.name}`}</span>
+                        <PencilIcon className="h-6 w-6" aria-hidden="true" />
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}

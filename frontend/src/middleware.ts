@@ -97,7 +97,7 @@ export async function middleware(request: NextRequest) {
       return response;
     }
 
-    if (!path.endsWith("edit") || !path.endsWith("create")) {
+    if (!path.endsWith("edit") && !path.endsWith("create")) {
       return response;
     }
   }

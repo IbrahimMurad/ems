@@ -1,35 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { PencilIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { department } from "@/app/lib/definitions";
-import { DeleteButton } from "@/app/ui/buttons";
+import { department, authenticatedUser } from "@/app/lib/definitions";
+import { DeleteButton, GoBackButton, EditButton } from "@/app/ui/buttons";
 import { deleteDepartment } from "@/app/lib/actions/department";
 
 export default function DepartmentDetails({
   department,
+  user,
 }: {
   department: department;
+  user: authenticatedUser;
 }) {
   const deleteDepartmentWithId = deleteDepartment.bind(null, department.id);
 
   return (
     <>
       <div className="mt-6 flex justify-end gap-4 mb-4">
-        <Link
-          href="/departments"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-base font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          <ArrowLeftIcon className=" mr-4 h-6 w-6" aria-hidden="true" />
-          Go back
-        </Link>
-        <Link
-          href={`/departments/${department.id}/edit`}
-          className="flex h-10 items-center rounded-lg bg-gray-700 px-4 text-lg font-medium text-gray-50 transition-colors hover:bg-gray-500"
-        >
-          Edit
-          <PencilIcon className="ml-4 h-6 w-6" aria-hidden="true" />
-        </Link>
+        <GoBackButton href="/departments" />
+        {user.role !== "employee" && (
+          <EditButton href={`/companies/${department.id}/edit`} />
+        )}
       </div>
       <div className="grid gap-y-4 gap-x-8 grid-cols-[max-content_1fr] rounded-lg bg-gray-100 p-4 md:p-6">
         {/* Company Name */}
@@ -54,12 +45,14 @@ export default function DepartmentDetails({
         <span className="mb-2 text-sm font-medium">Total employees : </span>
         <strong>{department.number_of_employees}</strong>
       </div>
-      <form
-        action={deleteDepartmentWithId}
-        className="mt-6 flex justify-end gap-4 mb-4"
-      >
-        <DeleteButton />
-      </form>
+      {user.role !== "employee" && (
+        <form
+          action={deleteDepartmentWithId}
+          className="mt-6 flex justify-end gap-4 mb-4"
+        >
+          <DeleteButton />
+        </form>
+      )}
     </>
   );
 }

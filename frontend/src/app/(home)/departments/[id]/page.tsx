@@ -3,13 +3,15 @@ import { retrieveDepartment } from "@/app/lib/data";
 import { department } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 import DepartmentDetails from "@/app/ui/departments/Details";
+import { getUser } from "@/app/lib/auth";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
   const department = await retrieveDepartment(id);
+  const user = await getUser();
 
-  if (!department) {
+  if (!department || !user) {
     notFound();
   }
 
@@ -25,7 +27,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <DepartmentDetails department={department as department} />
+      <DepartmentDetails department={department as department} user={user} />
     </main>
   );
 }
