@@ -50,12 +50,12 @@ export async function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
   // If no tokens, redirect to login
-  if (!accessToken || !refreshToken) {
+  if (!refreshToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   // Check if access token is expired
-  if (isTokenExpired(accessToken)) {
+  if (isTokenExpired(accessToken as string)) {
     // Try to refresh the token
     const newAccessToken = await refreshAccessToken(refreshToken);
 
@@ -71,7 +71,7 @@ export async function middleware(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 15, // 15 minutes
+      maxAge: 15 * 60, // 15 minutes
     });
   }
 

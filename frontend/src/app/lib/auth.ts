@@ -12,7 +12,7 @@ export async function setTokens(access: string, refresh: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 60 * 15, // 15 minutes
+    maxAge: 15 * 60, // 15 minutes
   });
   cookieStore.set(REFRESH_TOKEN_KEY, refresh, {
     httpOnly: true,
@@ -119,7 +119,7 @@ export async function login(email: string, password: string) {
   if (response.ok) {
     const { access, refresh } = await response.json();
     await setTokens(access, refresh);
-    return true;
+    redirect("/");
   } else {
     const { detail } = await response.json();
     return detail;
