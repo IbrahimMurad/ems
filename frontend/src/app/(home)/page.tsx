@@ -1,20 +1,18 @@
 import * as React from "react";
 import { notFound } from "next/navigation";
 import {
-  fetchUsers,
   fetchCompanies,
   fetchDepartments,
   fetchEmployees,
-} from "../lib/data";
+} from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 
 export default async function HomePage() {
-  const users = await fetchUsers();
   const companies = await fetchCompanies();
   const departments = await fetchDepartments();
   const employees = await fetchEmployees();
 
-  if (!users || !companies || !departments || !employees) {
+  if (!companies || !departments || !employees) {
     notFound();
   }
 

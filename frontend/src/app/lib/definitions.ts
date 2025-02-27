@@ -1,7 +1,7 @@
 export type authenticatedUser = {
   id: number;
   username: string;
-  role: "Admin" | "Manager" | "Employee";
+  role: "admin" | "manager" | "employee";
 };
 
 export type user = {

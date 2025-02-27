@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { authenticatedUser } from "@/app/lib/definitions";
 
 const links = [
   { name: "Dashboard", href: "/", icon: ChartBarIcon },
@@ -23,8 +24,11 @@ const links = [
   { name: "Users", href: "/users", icon: UserCircleIcon },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ user }: { user: authenticatedUser }) {
   const pathname = usePathname();
+  if (user.role !== "admin") {
+    links.splice(4, 1);
+  }
   return (
     <>
       {links.map((link) => {

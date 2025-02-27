@@ -48,6 +48,7 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
+  const user = JSON.parse(request.cookies.get("user")?.value || "{}");
 
   // If no tokens, redirect to login
   if (!refreshToken) {
@@ -75,7 +76,33 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  return response;
+  if (user.role === "admin") {
+    return response;
+  }
+
+  if (
+    user.role === "manager" &&
+    !request.nextUrl.pathname.startsWith("/users")
+  ) {
+    return response;
+  }
+
+  const path = request.nextUrl.pathname;
+  if (user.role === "employee") {
+    if (path === "/") {
+      return response;
+    }
+
+    if (path.startsWith("/employees")) {
+      return response;
+    }
+
+    if (!path.endsWith("edit") || !path.endsWith("create")) {
+      return response;
+    }
+  }
+
+  return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {

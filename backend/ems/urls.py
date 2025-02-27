@@ -9,7 +9,7 @@ from django.urls import include, path
 from employee.views import EmployeeViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt import views as jwt_views
-from user_account.views import CheckAccess, UserViewSet
+from user_account.views import CurrentUserDetailView, UserViewSet
 
 rounter = DefaultRouter()
 
@@ -25,5 +25,5 @@ urlpatterns = [
     path("api/", include(rounter.urls)),
     path("api/token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/token/verify/", CheckAccess.as_view(), name="token_verify"),
+    path("api/me/", CurrentUserDetailView.as_view(), name="current-user"),
 ]

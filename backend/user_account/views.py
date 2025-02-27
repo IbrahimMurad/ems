@@ -18,10 +18,17 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ["username", "email", "role"]
 
 
-class CheckAccess(views.APIView):
-    """A view to check if a user has access to the system"""
+class CurrentUserDetailView(views.APIView):
+    """A view to get the current user's details"""
 
+    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return response.Response({"message": "You have access to the system"})
+        return response.Response(
+            {
+                "id": request.user.id,
+                "username": request.user.username,
+                "role": request.user.role,
+            }
+        )
