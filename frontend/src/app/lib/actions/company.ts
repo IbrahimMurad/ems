@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { urls } from "@/app/lib/definitions";
 import handleUnsuccessful from "../handleUnsuccessful";
 import { CreateCompany, UpdateCompany } from "@/app/lib/schemas";
+import { getTokens } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -45,11 +46,18 @@ export async function createCompany(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a POST request to the backend to create a new company
   const response = await fetch(urls.companies, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });
@@ -97,11 +105,18 @@ export async function updateCompany(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a PATCH request to the backend to update the company
   const response = await fetch(`${urls.companies}${id}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });

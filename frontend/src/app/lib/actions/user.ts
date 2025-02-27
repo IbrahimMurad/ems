@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { urls } from "../definitions";
 import { CreateUser, UpdateUser } from "../schemas";
 import handleUnsuccessful from "../handleUnsuccessful";
+import { getTokens } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -60,11 +61,18 @@ export async function createUser(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a POST request to the backend to create a new user
   const response = await fetch(urls.users, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });
@@ -117,11 +125,18 @@ export async function updateUser(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a PATCH request to the backend to update a user
   const response = await fetch(`${urls.users}${id}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { urls } from "../definitions";
 import { CreateEmployee, UpdateEmployee } from "../schemas";
 import handleUnsuccessful from "../handleUnsuccessful";
+import { getTokens } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -66,11 +67,18 @@ export async function createEmployee(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a POST request to the backend to create a new employee
   const response = await fetch(urls.employees, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });
@@ -124,11 +132,18 @@ export async function updateEmployee(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a PATCH request to the backend to update an employee
   const response = await fetch(`${urls.employees}${id}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });

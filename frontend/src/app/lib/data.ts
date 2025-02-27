@@ -78,11 +78,18 @@ export async function fetchCompanies(
   search?: string
 ): Promise<companiesList | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(
       urls.companies +
         (page ? `?page=${page}` : "") +
         (search ? `&search=${search}` : ""),
       {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         credentials: "include",
       }
     );
@@ -99,7 +106,14 @@ export async function fetchCompanies(
 
 export async function retrieveCompany(id: string): Promise<company | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(`${urls.companies}${id}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       credentials: "include",
     });
     if (response.status === 404) {
@@ -120,11 +134,18 @@ export async function fetchDepartments(
   search?: string
 ): Promise<departmentsList | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(
       urls.departments +
         (page ? `?page=${page}` : "") +
         (search ? `&search=${search}` : ""),
       {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         credentials: "include",
       }
     );
@@ -143,7 +164,14 @@ export async function retrieveDepartment(
   id: string
 ): Promise<department | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(`${urls.departments}${id}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       credentials: "include",
     });
     if (response.status === 404) {
@@ -164,11 +192,18 @@ export async function fetchEmployees(
   search?: string
 ): Promise<employeesList | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(
       urls.employees +
         (page ? `?page=${page}` : "") +
         (search ? `&search=${search}` : ""),
       {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         credentials: "include",
       }
     );
@@ -191,7 +226,14 @@ export async function fetchEmployees(
 
 export async function retrieveEmployee(id: string): Promise<employee | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(`${urls.employees}${id}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       credentials: "include",
     });
     if (response.status === 404) {

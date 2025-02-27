@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { urls } from "@/app/lib/definitions";
 import handleUnsuccessful from "../handleUnsuccessful";
+import { getTokens } from "@/app/lib/auth";
 
 import { CreateDepartment, UpdateDepartment } from "@/app/lib/schemas";
 
@@ -49,11 +50,18 @@ export async function createDepartment(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a POST request to the backend to create a new department
   const response = await fetch(urls.departments, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });
@@ -109,11 +117,18 @@ export async function updateDepartment(
     };
   }
 
+  // Get the access token
+  const { accessToken } = await getTokens();
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
   // Send a PATCH request to the backend to update the department
   const response = await fetch(`${urls.departments}${id}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(validatedFields.data),
   });
