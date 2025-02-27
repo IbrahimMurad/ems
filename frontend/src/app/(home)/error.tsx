@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { startTransition } from "react";
 
 export default function Error({
@@ -24,14 +24,16 @@ export default function Error({
   };
 
   useEffect(() => {
-    console.error(error);
+    if (error.message === "unauthenticated") {
+      redirect("/login");
+    }
   }, [error]);
 
   return (
     <main className="flex h-full flex-col items-center justify-center">
       <h2 className="text-center">Something went wrong!</h2>
       <p className="text-red-700 bg-red-500/25 mt-2 rounded-lg py-2 px-4">
-        {error.message}
+        Somthing went wrong while fetching the data. Please try again.
       </p>
       <button
         className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"

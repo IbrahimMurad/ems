@@ -1,7 +1,7 @@
 import EditDepartmentForm from "@/app/ui/departments/edit-form";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { retrieveDepartment, fetchCompanies } from "@/app/lib/data";
-import { department } from "@/app/lib/definitions";
+import { companiesList, department } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -20,7 +20,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         breadcrumbs={[
           { label: "Departments", href: "/departments" },
           {
-            label: "Edit Department",
+            label: "edit",
             href: `/departments/${id}/edit`,
             active: true,
           },
@@ -28,7 +28,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       />
       <EditDepartmentForm
         department={department as department}
-        companies={companies.results}
+        companies={(companies as companiesList).results}
       />
     </main>
   );

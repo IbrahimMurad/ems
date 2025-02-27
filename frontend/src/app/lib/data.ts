@@ -11,16 +11,26 @@ import {
 import { isoToLocaleDate } from "./utils";
 import { urls } from "./definitions";
 import handleUnsuccessful from "./handleUnsuccessful";
+import { getTokens } from "./auth";
 
 export async function fetchUsers(
   page?: number,
   search?: string
 ): Promise<usersList | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(
       urls.users +
         (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : "")
+        (search ? `&search=${search}` : ""),
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
     if (response.status === 404) {
       return null;
@@ -34,13 +44,15 @@ export async function fetchUsers(
     }));
     return users;
   } catch (error) {
-    throw new Error(`Failed to fetch users.\t ${error}`);
+    throw error;
   }
 }
 
 export async function retrieveUser(id: string): Promise<user | null> {
   try {
-    const response = await fetch(`${urls.users}${id}/`);
+    const response = await fetch(`${urls.users}${id}/`, {
+      credentials: "include",
+    });
     if (response.status === 404) {
       return null;
     }
@@ -50,7 +62,7 @@ export async function retrieveUser(id: string): Promise<user | null> {
     user.last_login = user.last_login ? isoToLocaleDate(user.last_login) : "-";
     return user;
   } catch (error) {
-    throw new Error(`Failed to fetch user. ${error}`);
+    throw new Error("Failed to fetch user", { cause: error });
   }
 }
 
@@ -62,7 +74,10 @@ export async function fetchCompanies(
     const response = await fetch(
       urls.companies +
         (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : "")
+        (search ? `&search=${search}` : ""),
+      {
+        credentials: "include",
+      }
     );
     if (response.status === 404) {
       return null;
@@ -71,13 +86,15 @@ export async function fetchCompanies(
     const companies = await response.json();
     return companies;
   } catch (error) {
-    throw new Error(`Failed to fetch companies. ${error}`);
+    throw new Error("Failed to fetch companies", { cause: error });
   }
 }
 
 export async function retrieveCompany(id: string): Promise<company | null> {
   try {
-    const response = await fetch(`${urls.companies}${id}/`);
+    const response = await fetch(`${urls.companies}${id}/`, {
+      credentials: "include",
+    });
     if (response.status === 404) {
       return null;
     }
@@ -87,7 +104,7 @@ export async function retrieveCompany(id: string): Promise<company | null> {
     company.updated_at = isoToLocaleDate(company.updated_at);
     return company;
   } catch (error) {
-    throw new Error(`Failed to fetch company. ${error}`);
+    throw new Error("Failed to fetch company", { cause: error });
   }
 }
 
@@ -99,7 +116,10 @@ export async function fetchDepartments(
     const response = await fetch(
       urls.departments +
         (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : "")
+        (search ? `&search=${search}` : ""),
+      {
+        credentials: "include",
+      }
     );
     if (response.status === 404) {
       return null;
@@ -108,7 +128,7 @@ export async function fetchDepartments(
     const department = await response.json();
     return department;
   } catch (error) {
-    throw new Error(`Failed to fetch departments. ${error}`);
+    throw new Error(`Failed to fetch departments. ${error}`, { cause: error });
   }
 }
 
@@ -116,7 +136,9 @@ export async function retrieveDepartment(
   id: string
 ): Promise<department | null> {
   try {
-    const response = await fetch(`${urls.departments}${id}/`);
+    const response = await fetch(`${urls.departments}${id}/`, {
+      credentials: "include",
+    });
     if (response.status === 404) {
       return null;
     }
@@ -126,7 +148,7 @@ export async function retrieveDepartment(
     department.updated_at = isoToLocaleDate(department.updated_at);
     return department;
   } catch (error) {
-    throw new Error(`Failed to fetch department. ${error}`);
+    throw new Error(`Failed to fetch department. ${error}`, { cause: error });
   }
 }
 
@@ -138,7 +160,10 @@ export async function fetchEmployees(
     const response = await fetch(
       urls.employees +
         (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : "")
+        (search ? `&search=${search}` : ""),
+      {
+        credentials: "include",
+      }
     );
     if (response.status === 404) {
       return null;
@@ -153,13 +178,15 @@ export async function fetchEmployees(
     }));
     return employees;
   } catch (error) {
-    throw new Error(`Failed to fetch employees. ${error}`);
+    throw new Error(`Failed to fetch employees. ${error}`, { cause: error });
   }
 }
 
 export async function retrieveEmployee(id: string): Promise<employee | null> {
   try {
-    const response = await fetch(`${urls.employees}${id}/`);
+    const response = await fetch(`${urls.employees}${id}/`, {
+      credentials: "include",
+    });
     if (response.status === 404) {
       return null;
     }
@@ -172,6 +199,6 @@ export async function retrieveEmployee(id: string): Promise<employee | null> {
       : "(Not hired yet)";
     return employee;
   } catch (error) {
-    throw new Error(`Failed to fetch employee. ${error}`);
+    throw new Error(`Failed to fetch employee. ${error}`, { cause: error });
   }
 }

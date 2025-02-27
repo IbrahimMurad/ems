@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import * as React from "react";
-import { redirect } from "next/navigation";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { login } from "@/app/lib/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -36,20 +36,11 @@ export default function LoginPage() {
     if (!email || !password) {
       return;
     }
-    const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
+    login(email, password).then((details) => {
+      if (details) {
+        setFormError(details);
+      }
     });
-    if (response.ok) {
-      alert("Login successful");
-      redirect("/");
-    } else {
-      const { detail } = await response.json();
-      setFormError(detail);
-    }
   };
 
   return (
@@ -99,6 +90,7 @@ export default function LoginPage() {
                 onChange={handlePasswordChange}
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 aria-describedby="password-error"
+                autoComplete="current-password"
               />
               <span
                 className="absolute top-1/3 right-2 text-2xl"

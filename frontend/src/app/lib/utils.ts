@@ -2,6 +2,10 @@ export function isoToLocaleDate(isoDate: string): string {
   return new Date(isoDate).toDateString().split(" ").slice(1).join(" ");
 }
 
+export function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.

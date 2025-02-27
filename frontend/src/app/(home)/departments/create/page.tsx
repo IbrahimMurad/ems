@@ -1,6 +1,7 @@
 import Form from "@/app/ui/departments/create-form";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { fetchCompanies } from "@/app/lib/data";
+import { companiesList } from "@/app/lib/definitions";
 
 export default async function Page() {
   const companies = await fetchCompanies();
@@ -8,15 +9,15 @@ export default async function Page() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "departments", href: "/departments" },
+          { label: "Departments", href: "/departments" },
           {
-            label: "create department",
+            label: "create",
             href: "/departments/create",
             active: true,
           },
         ]}
       />
-      <Form companies={companies.results} />
+      <Form companies={(companies as companiesList).results} />
     </main>
   );
 }

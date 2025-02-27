@@ -5,7 +5,11 @@ import {
   fetchCompanies,
   fetchDepartments,
 } from "@/app/lib/data";
-import { employee } from "@/app/lib/definitions";
+import {
+  companiesList,
+  departmentsList,
+  employee,
+} from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -32,8 +36,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       />
       <EditEmployeeForm
         employee={employee as employee}
-        companies={companies.results}
-        departments={departments.results}
+        companies={(companies as companiesList).results}
+        departments={(departments as departmentsList).results}
       />
     </main>
   );

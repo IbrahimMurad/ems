@@ -6,9 +6,9 @@ export default async function Page() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "users", href: "/users" },
+          { label: "Users", href: "/users" },
           {
-            label: "create users",
+            label: "create",
             href: "/users/create",
             active: true,
           },
