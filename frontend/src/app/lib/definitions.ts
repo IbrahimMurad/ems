@@ -64,7 +64,7 @@ export type statusType = {
   style: string;
 };
 
-export type statusDisplayAndStyles = {
+type statusDisplayAndStyles = {
   application_received: statusType;
   interview_scheduled: statusType;
   hired: statusType;
@@ -104,4 +104,17 @@ export const urls = {
   departments: "http://127.0.0.1:8000/api/departments/",
   employees: "http://127.0.0.1:8000/api/employees/",
   users: "http://127.0.0.1:8000/api/users/",
+};
+
+export const statusStyles: statusDisplayAndStyles = {
+  application_received: {
+    display: "Application Received",
+    style: "bg-yellow-100 text-yellow-800",
+  },
+  interview_scheduled: {
+    display: "Interview Scheduled",
+    style: "bg-blue-100 text-blue-800",
+  },
+  hired: { display: "Hired", style: "bg-green-100 text-green-800" },
+  not_accepted: { display: "Not Accepted", style: "bg-red-100 text-red-800" },
 };

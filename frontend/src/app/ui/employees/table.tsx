@@ -2,21 +2,8 @@ import React from "react";
 import { employee } from "@/app/lib/definitions";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { statusDisplayAndStyles } from "@/app/lib/definitions";
+import { statusStyles } from "@/app/lib/definitions";
 import DeleteItem from "@/app/ui/DeleteItem";
-
-const statusStyles: statusDisplayAndStyles = {
-  application_received: {
-    display: "Application Received",
-    style: "bg-yellow-100 text-yellow-800",
-  },
-  interview_scheduled: {
-    display: "Interview Scheduled",
-    style: "bg-blue-100 text-blue-800",
-  },
-  hired: { display: "Hired", style: "bg-green-100 text-green-800" },
-  not_accepted: { display: "Not Accepted", style: "bg-red-100 text-red-800" },
-};
 
 export default function EmployeesTable({
   employees,
