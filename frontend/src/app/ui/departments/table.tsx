@@ -21,11 +21,19 @@ export default async function DepartmentsTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center text-lg font-bold text-purple-800">
-                      <p>{department.name}</p>
+                      <Link
+                        className="hover:text-purple-600 hover:underline"
+                        href={`/departments/${department.id}`}
+                      >
+                        {department.name}
+                      </Link>
                     </div>
-                    <p className="text-md text-gray-500 font-medium">
+                    <Link
+                      href={`/companies/${department.company.id}`}
+                      className="text-md text-gray-500 font-medium hover:text-purple-500 hover:underline"
+                    >
                       {department.company.name}
-                    </p>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
@@ -71,9 +79,21 @@ export default async function DepartmentsTable({
             <tbody className="bg-white rounded-lg divide-y-2 divide-gray-100">
               {departments.map((department) => (
                 <tr key={department.id} className="w-full">
-                  <td className="px-3 py-3">{department.name}</td>
+                  <td className="px-3 py-3">
+                    <Link
+                      className="hover:text-purple-600 hover:underline"
+                      href={`/departments/${department.id}`}
+                    >
+                      {department.name}
+                    </Link>
+                  </td>
                   <td className="truncate px-3 py-3">
-                    {department.company.name}
+                    <Link
+                      href={`/companies/${department.company.id}`}
+                      className="hover:text-purple-500 hover:underline"
+                    >
+                      {department.company.name}
+                    </Link>
                   </td>
                   <td className="truncate px-3 py-3">
                     {department.number_of_employees}

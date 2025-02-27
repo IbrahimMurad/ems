@@ -18,7 +18,12 @@ export default async function UsersTable({ users }: { users: user[] }) {
                 <div className="flex items-start flex-wrap justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center text-lg font-bold text-purple-800">
-                      <p>{user.username}</p>
+                      <Link
+                        className="hover:underline"
+                        href={`/users/${user.id}`}
+                      >
+                        {user.username}
+                      </Link>
                     </div>
                     <p className="text-md text-gray-500 font-medium">
                       {user.email}
@@ -73,7 +78,14 @@ export default async function UsersTable({ users }: { users: user[] }) {
               {users.map((user) => (
                 <tr key={user.id} className="w-full">
                   <td className="px-3 py-3">{user.id}</td>
-                  <td className="px-3 py-3">{user.username}</td>
+                  <td className="px-3 py-3">
+                    <Link
+                      className="hover:underline"
+                      href={`/users/${user.id}`}
+                    >
+                      {user.username}
+                    </Link>
+                  </td>
                   <td className="px-3 py-3">{user.email}</td>
                   <td className="px-3 py-3">{capitalize(user.role)}</td>
                   <td className="px-3 py-3 hidden xl:table-cell">

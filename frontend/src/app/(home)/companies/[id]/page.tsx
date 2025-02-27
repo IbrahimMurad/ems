@@ -1,8 +1,8 @@
-import EditCompanyForm from "@/app/ui/companies/edit-form";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { retrieveCompany } from "@/app/lib/data";
 import { company } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
+import CompanyDetails from "@/app/ui/companies/Details";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -18,15 +18,14 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       <Breadcrumbs
         breadcrumbs={[
           { label: "Companies", href: "/companies" },
-          { label: `${company.name}`, href: `/companies/${company.id}` },
           {
-            label: "edit",
-            href: `/companies/${company.id}/edit`,
+            label: `${company.name}`,
+            href: `/companies/${company.name}`,
             active: true,
           },
         ]}
       />
-      <EditCompanyForm company={company as company} />
+      <CompanyDetails company={company as company} />
     </main>
   );
 }

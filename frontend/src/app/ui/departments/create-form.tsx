@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { company } from "@/app/lib/definitions";
 import { createDepartment, State } from "@/app/lib/actions/department";
 
@@ -84,7 +84,7 @@ export default function Form({ companies }: { companies: company[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Department</Button>
+        <SubmitButton type="submit">Create Department</SubmitButton>
       </div>
     </form>
   );

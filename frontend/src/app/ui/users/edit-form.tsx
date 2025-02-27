@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { updateUser, State } from "@/app/lib/actions/user";
 import { user } from "@/app/lib/definitions";
 
@@ -128,12 +128,12 @@ export default function EditUserForm({ user }: { user: user }) {
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/users"
+          href={`/users/${user.id}`}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Update User</Button>
+        <SubmitButton type="submit">Update User</SubmitButton>
       </div>
     </form>
   );

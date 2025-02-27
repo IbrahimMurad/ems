@@ -36,7 +36,12 @@ export default function EmployeesTable({
                 <div className="flex items-start flex-wrap justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center text-lg font-bold text-purple-800">
-                      <p>{employee.name}</p>
+                      <Link
+                        href={`/employees/${employee.id}`}
+                        className="hover:underline"
+                      >
+                        {employee.name}
+                      </Link>
                     </div>
                     <p className="text-md text-gray-500 font-medium">
                       {employee.designation}
@@ -52,12 +57,22 @@ export default function EmployeesTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className="ml-2">{employee.department.name}</p>
-                    <p className="ml-2 text-sm">{employee.company.name}</p>
+                    <Link
+                      href={`/departments/${employee.department.id}`}
+                      className="block ml-2 hover:underline"
+                    >
+                      {employee.department.name}
+                    </Link>
+                    <Link
+                      href={`/companies/${employee.company.id}`}
+                      className="block ml-2 text-sm hover:underline"
+                    >
+                      {employee.company.name}
+                    </Link>
                   </div>
                   <div className="flex justify-end gap-2">
                     <Link
-                      href={`/departments/${employee.id}/edit`}
+                      href={`/employees/${employee.id}/edit`}
                       className="text-gray-800 hover:text-indigo-800  hover:scale-110"
                     >
                       <span className="sr-only">{`Edit ${employee.name}`}</span>
@@ -92,11 +107,28 @@ export default function EmployeesTable({
             <tbody className="bg-white rounded-lg divide-y-2 divide-gray-100">
               {employees.map((employee) => (
                 <tr key={employee.id} className="w-full">
-                  <td className="p-3 text-base">{employee.name}</td>
+                  <td className="p-3 text-base">
+                    <Link
+                      href={`/employees/${employee.id}`}
+                      className="hover:underline"
+                    >
+                      {employee.name}
+                    </Link>
+                  </td>
                   <td className="p-3 text-base">{employee.designation}</td>
                   <td className="p-3">
-                    <p className="text-base">{employee.department.name}</p>
-                    <p className="text-sm">{employee.company.name}</p>
+                    <Link
+                      href={`/departments/${employee.department.id}`}
+                      className="block ml-2 hover:underline"
+                    >
+                      {employee.department.name}
+                    </Link>
+                    <Link
+                      href={`/companies/${employee.company.id}`}
+                      className="block ml-2 text-sm hover:underline"
+                    >
+                      {employee.company.name}
+                    </Link>
                   </td>
                   <td className="truncate p-3">
                     <span

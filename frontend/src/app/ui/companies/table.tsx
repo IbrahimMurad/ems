@@ -20,7 +20,9 @@ export default async function CompaniesTable({
               >
                 <div className="flex items-center justify-between border-b pb-4">
                   <div className="flex items-center text-xl font-bold text-purple-800">
-                    <p>{company.name}</p>
+                    <Link href={`/companies/${company.id}`}>
+                      {company.name}
+                    </Link>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
@@ -82,7 +84,14 @@ export default async function CompaniesTable({
             <tbody className="bg-white rounded-lg divide-y-2 divide-gray-100">
               {companies.map((company) => (
                 <tr key={company.id} className="w-full">
-                  <td className="truncate px-3 py-3">{company.name}</td>
+                  <td className="truncate px-3 py-3">
+                    <Link
+                      className="hover:underline"
+                      href={`/companies/${company.id}`}
+                    >
+                      {company.name}
+                    </Link>
+                  </td>
                   <td className="truncate px-3 py-3">
                     {company.number_of_departments}
                   </td>

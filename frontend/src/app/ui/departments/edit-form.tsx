@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { department, company } from "@/app/lib/definitions";
 import { updateDepartment, State } from "@/app/lib/actions/department";
 
@@ -90,81 +90,15 @@ export default function EditDepartmentForm({
             )}
           </div>
         </div>
-
-        {/* Added at */}
-        <div className="mb-4">
-          <label
-            htmlFor="created-at"
-            className="mb-2 block text-sm font-medium"
-          >
-            Added at
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="created-at"
-                name="created_at"
-                type="text"
-                defaultValue={department.created_at}
-                disabled
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Last updated */}
-        <div className="mb-4">
-          <label
-            htmlFor="updated-at"
-            className="mb-2 block text-sm font-medium"
-          >
-            Last updated
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="updated-at"
-                name="updated_at"
-                type="text"
-                defaultValue={department.updated_at}
-                disabled
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Number of Employees */}
-        <div className="mb-4">
-          <label
-            htmlFor="number-of-employees"
-            className="mb-2 block text-sm font-medium"
-          >
-            Number of Employees
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="number-of-employees"
-                name="number_of_employees"
-                type="text"
-                defaultValue={department.number_of_employees}
-                disabled
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/departments"
+          href={`/departments/${department.id}`}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Update Department</Button>
+        <SubmitButton type="submit">Update Department</SubmitButton>
       </div>
     </form>
   );

@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { employee, department, company } from "@/app/lib/definitions";
 import { updateEmployee, State } from "@/app/lib/actions/employee";
 import { useState } from "react";
@@ -279,82 +279,6 @@ export default function EditEmployeeForm({
             )}
           </div>
         </div>
-
-        {/* Hired on */}
-        <div className="mb-4">
-          <label htmlFor="hired-on" className="mb-2 block text-sm font-medium">
-            Hired on:
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <input
-              id="hired-on"
-              name="hired_on"
-              type="text"
-              disabled
-              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={employee.hired_on}
-            />
-          </div>
-        </div>
-        {/* Days employed */}
-        <div className="mb-4">
-          <label
-            htmlFor="days-employed"
-            className="mb-2 block text-sm font-medium"
-          >
-            Days Employed:
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <input
-              id="days-employed"
-              name="days_employed"
-              type="text"
-              disabled
-              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={employee.days_employed}
-            />
-          </div>
-        </div>
-
-        {/* Created at */}
-        <div className="mb-4">
-          <label
-            htmlFor="created-at"
-            className="mb-2 block text-sm font-medium"
-          >
-            Created at:
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <input
-              id="created-at"
-              name="created_at"
-              type="text"
-              disabled
-              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={employee.created_at}
-            />
-          </div>
-        </div>
-
-        {/* Last updated */}
-        <div className="mb-4">
-          <label
-            htmlFor="updated-at"
-            className="mb-2 block text-sm font-medium"
-          >
-            Last updated:
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <input
-              id="updated-at"
-              name="updated_at"
-              type="text"
-              disabled
-              className="block w-full rounded-md border border-gray-200 py-2 pl-4 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={employee.updated_at}
-            />
-          </div>
-        </div>
       </div>
       <div className="mt-6">
         {state.errors?.non_field_errors &&
@@ -366,12 +290,12 @@ export default function EditEmployeeForm({
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/employees"
+          href={`/employees/${employee.id}`}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Employee</Button>
+        <SubmitButton type="submit">Edit Employee</SubmitButton>
       </div>
     </form>
   );

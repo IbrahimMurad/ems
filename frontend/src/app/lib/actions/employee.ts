@@ -146,6 +146,6 @@ export async function updateEmployee(
   if (!response.ok) handleUnsuccessful(response);
 
   // if the department is created successfully, revalidate the departments page
-  revalidatePath(`/employees/${id}/edit`);
-  redirect(`/employees/${id}/edit`);
+  revalidatePath(`/employees/${id}`);
+  redirect(`/employees/${id}`);
 }

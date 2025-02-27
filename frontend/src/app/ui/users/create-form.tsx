@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { createUser, State } from "@/app/lib/actions/user";
 
 export default function Form() {
@@ -177,7 +177,7 @@ export default function Form() {
         >
           Cancel
         </Link>
-        <Button type="submit">Create User</Button>
+        <SubmitButton type="submit">Create User</SubmitButton>
       </div>
     </form>
   );

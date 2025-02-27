@@ -138,6 +138,6 @@ export async function updateDepartment(
   if (!response.ok) handleUnsuccessful(response);
 
   // if the department is updated successfully, revalidate the department edit page
-  revalidatePath(`/departments/${id}/edit`);
-  redirect(`/departments/${id}/edit`);
+  revalidatePath(`/departments/${id}`);
+  redirect(`/departments/${id}`);
 }

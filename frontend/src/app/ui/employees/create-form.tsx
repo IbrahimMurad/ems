@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { SubmitButton } from "@/app/ui/buttons";
 import { company, department } from "@/app/lib/definitions";
 import { createEmployee, State } from "@/app/lib/actions/employee";
 import { useState } from "react";
@@ -290,7 +290,7 @@ export default function Form({
         >
           Cancel
         </Link>
-        <Button type="submit">Create Employee</Button>
+        <SubmitButton type="submit">Create Employee</SubmitButton>
       </div>
     </form>
   );

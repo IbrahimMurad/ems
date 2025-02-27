@@ -50,7 +50,14 @@ export async function fetchUsers(
 
 export async function retrieveUser(id: string): Promise<user | null> {
   try {
+    const { accessToken } = await getTokens();
+    if (!accessToken) {
+      throw new Error("Access token is missing");
+    }
     const response = await fetch(`${urls.users}${id}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       credentials: "include",
     });
     if (response.status === 404) {

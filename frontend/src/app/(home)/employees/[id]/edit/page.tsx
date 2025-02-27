@@ -28,7 +28,11 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         breadcrumbs={[
           { label: "Employees", href: "/employees" },
           {
-            label: "Edit Employee",
+            label: `${employee.name}`,
+            href: `/employees/${id}`,
+          },
+          {
+            label: "Edit",
             href: `/employees/${id}/edit`,
             active: true,
           },

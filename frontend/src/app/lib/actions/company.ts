@@ -119,6 +119,6 @@ export async function updateCompany(
   if (!response.ok) handleUnsuccessful(response);
 
   // if the company is updated successfully, revalidate the company edit page
-  revalidatePath(`/companies/${id}/edit`);
-  redirect(`/companies/${id}/edit`);
+  revalidatePath(`/companies/${id}`);
+  redirect(`/companies/${id}`);
 }
