@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { urls } from "@/app/lib/definitions";
-import handleUnsuccessful from "../handleUnsuccessful";
+import { request } from "@/app/lib/auth";
 import { CreateCompany, UpdateCompany } from "@/app/lib/schemas";
-import { getTokens } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -46,21 +45,10 @@ export async function createCompany(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
-
-  // Send a POST request to the backend to create a new company
-  const response = await fetch(urls.companies, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const url = urls.companies;
+  const method = "POST";
+  const data = validatedFields.data;
+  const response = await request(url, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -70,9 +58,6 @@ export async function createCompany(
       message: "Failed to create company",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the company is created successfully, revalidate the companies page
   revalidatePath("/companies");
@@ -105,21 +90,10 @@ export async function updateCompany(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
-
-  // Send a PATCH request to the backend to update the company
-  const response = await fetch(`${urls.companies}${id}/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const url = `${urls.companies}${id}/`;
+  const method = "PATCH";
+  const data = validatedFields.data;
+  const response = await request(url, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -129,9 +103,6 @@ export async function updateCompany(
       message: "Failed to update company",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the company is updated successfully, revalidate the company edit page
   revalidatePath(`/companies/${id}`);

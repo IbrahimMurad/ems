@@ -3,8 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { urls } from "@/app/lib/definitions";
-import handleUnsuccessful from "../handleUnsuccessful";
-import { getTokens } from "@/app/lib/auth";
+import { request } from "@/app/lib/auth";
 
 import { CreateDepartment, UpdateDepartment } from "@/app/lib/schemas";
 
@@ -50,21 +49,10 @@ export async function createDepartment(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
-
-  // Send a POST request to the backend to create a new department
-  const response = await fetch(urls.departments, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const url = urls.departments;
+  const method = "POST";
+  const data = validatedFields.data;
+  const response = await request(url, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -81,9 +69,6 @@ export async function createDepartment(
       message: "Failed to create department.",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the department is created successfully, revalidate the departments page
   revalidatePath("/departments");
@@ -117,21 +102,11 @@ export async function updateDepartment(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
+  const url = urls.departments;
+  const method = "PATCH";
+  const data = validatedFields.data;
 
-  // Send a PATCH request to the backend to update the department
-  const response = await fetch(`${urls.departments}${id}/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const response = await request(`${url}${id}/`, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -148,9 +123,6 @@ export async function updateDepartment(
       message: "Failed to update department.",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the department is updated successfully, revalidate the department edit page
   revalidatePath(`/departments/${id}`);

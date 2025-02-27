@@ -1,3 +1,5 @@
+"use server";
+
 import {
   usersList,
   companiesList,
@@ -10,32 +12,19 @@ import {
 } from "./definitions";
 import { isoToLocaleDate } from "./utils";
 import { urls } from "./definitions";
-import handleUnsuccessful from "./handleUnsuccessful";
-import { getTokens } from "./auth";
+import { request } from "./auth";
 
 export async function fetchUsers(
   page?: number,
   search?: string
 ): Promise<usersList | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(
+    const url =
       urls.users +
-        (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : ""),
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+      (page ? `?page=${page}` : "") +
+      (search ? `&search=${search}` : "");
+    const method = "GET";
+    const response = await request(url, method);
     const users = await response.json();
     users.results = users.results.map((user: user) => ({
       ...user,
@@ -50,20 +39,10 @@ export async function fetchUsers(
 
 export async function retrieveUser(id: string): Promise<user | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(`${urls.users}${id}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    });
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+    const url = `${urls.users}${id}/`;
+    const method = "GET";
+    const response = await request(url, method);
+
     const user = await response.json();
     user.date_joined = isoToLocaleDate(user.date_joined);
     user.last_login = user.last_login ? isoToLocaleDate(user.last_login) : "-";
@@ -78,25 +57,12 @@ export async function fetchCompanies(
   search?: string
 ): Promise<companiesList | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(
+    const url =
       urls.companies +
-        (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : ""),
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      }
-    );
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+      (page ? `?page=${page}` : "") +
+      (search ? `&search=${search}` : "");
+    const method = "GET";
+    const response = await request(url, method);
     const companies = await response.json();
     return companies;
   } catch (error) {
@@ -106,20 +72,9 @@ export async function fetchCompanies(
 
 export async function retrieveCompany(id: string): Promise<company | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(`${urls.companies}${id}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    });
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+    const url = `${urls.companies}${id}/`;
+    const method = "GET";
+    const response = await request(url, method);
     const company = await response.json();
     company.created_at = isoToLocaleDate(company.created_at);
     company.updated_at = isoToLocaleDate(company.updated_at);
@@ -134,25 +89,12 @@ export async function fetchDepartments(
   search?: string
 ): Promise<departmentsList | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(
+    const url =
       urls.departments +
-        (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : ""),
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      }
-    );
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+      (page ? `?page=${page}` : "") +
+      (search ? `&search=${search}` : "");
+    const method = "GET";
+    const response = await request(url, method);
     const department = await response.json();
     return department;
   } catch (error) {
@@ -164,20 +106,9 @@ export async function retrieveDepartment(
   id: string
 ): Promise<department | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(`${urls.departments}${id}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    });
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+    const url = `${urls.departments}${id}/`;
+    const method = "GET";
+    const response = await request(url, method);
     const department = await response.json();
     department.created_at = isoToLocaleDate(department.created_at);
     department.updated_at = isoToLocaleDate(department.updated_at);
@@ -192,25 +123,12 @@ export async function fetchEmployees(
   search?: string
 ): Promise<employeesList | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(
+    const url =
       urls.employees +
-        (page ? `?page=${page}` : "") +
-        (search ? `&search=${search}` : ""),
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      }
-    );
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+      (page ? `?page=${page}` : "") +
+      (search ? `&search=${search}` : "");
+    const method = "GET";
+    const response = await request(url, method);
     const employees = await response.json();
     employees.results = employees.results.map((employee: employee) => ({
       ...employee,
@@ -226,20 +144,9 @@ export async function fetchEmployees(
 
 export async function retrieveEmployee(id: string): Promise<employee | null> {
   try {
-    const { accessToken } = await getTokens();
-    if (!accessToken) {
-      throw new Error("Access token is missing");
-    }
-    const response = await fetch(`${urls.employees}${id}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    });
-    if (response.status === 404) {
-      return null;
-    }
-    if (!response.ok) handleUnsuccessful(response);
+    const url = `${urls.employees}${id}/`;
+    const method = "GET";
+    const response = await request(url, method);
     const employee = await response.json();
     employee.created_at = isoToLocaleDate(employee.created_at);
     employee.updated_at = isoToLocaleDate(employee.updated_at);

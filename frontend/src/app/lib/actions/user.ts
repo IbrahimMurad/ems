@@ -4,8 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { urls } from "../definitions";
 import { CreateUser, UpdateUser } from "../schemas";
-import handleUnsuccessful from "../handleUnsuccessful";
-import { getTokens } from "@/app/lib/auth";
+import { request } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -61,21 +60,10 @@ export async function createUser(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
-
-  // Send a POST request to the backend to create a new user
-  const response = await fetch(urls.users, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const url = urls.users;
+  const method = "POST";
+  const data = validatedFields.data;
+  const response = await request(url, method, data);
 
   // Handle invalid data rejected by the backend
   if (response.status === 400) {
@@ -85,9 +73,6 @@ export async function createUser(
       message: "Failed to create user",
     };
   }
-
-  // Handle unsuccessful response
-  if (!response.ok) handleUnsuccessful(response);
 
   // If created successfully go to the users page
   revalidatePath("/users");
@@ -124,22 +109,10 @@ export async function updateUser(
       message: "Missing Fields. Failed to Create Department.",
     };
   }
-
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
-
-  // Send a PATCH request to the backend to update a user
-  const response = await fetch(`${urls.users}${id}/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const url = `${urls.users}${id}/`;
+  const method = "PATCH";
+  const data = validatedFields.data;
+  const response = await request(url, method, data);
 
   // Handle invalid data rejected by the backend
   if (response.status === 400) {
@@ -149,9 +122,6 @@ export async function updateUser(
       message: "Failed to update user",
     };
   }
-
-  // Handle unsuccessful response
-  if (!response.ok) handleUnsuccessful(response);
 
   // If updated successfully reload the user's page
   revalidatePath(`/users/${id}/edit`);

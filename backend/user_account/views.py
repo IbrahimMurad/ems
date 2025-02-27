@@ -1,5 +1,6 @@
 from core.permissions import IsAdmin
 from rest_framework import response, views, viewsets
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from user_account.models import User
 from user_account.serializers import UserSerializer
@@ -13,6 +14,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, IsAdmin]
+    filter_backends = [SearchFilter]
+    search_fields = ["username", "email", "role"]
 
 
 class CheckAccess(views.APIView):

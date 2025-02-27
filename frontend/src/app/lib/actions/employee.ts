@@ -4,8 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { urls } from "../definitions";
 import { CreateEmployee, UpdateEmployee } from "../schemas";
-import handleUnsuccessful from "../handleUnsuccessful";
-import { getTokens } from "@/app/lib/auth";
+import { request } from "@/app/lib/auth";
 
 /**
  * State type definition
@@ -67,21 +66,11 @@ export async function createEmployee(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
+  const url = urls.employees;
+  const method = "POST";
+  const data = validatedFields.data;
 
-  // Send a POST request to the backend to create a new employee
-  const response = await fetch(urls.employees, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const response = await request(url, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -91,9 +80,6 @@ export async function createEmployee(
       message: "Failed to create department.",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the department is created successfully, revalidate the departments page
   revalidatePath("/employees");
@@ -132,21 +118,11 @@ export async function updateEmployee(
     };
   }
 
-  // Get the access token
-  const { accessToken } = await getTokens();
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
+  const url = `${urls.employees}${id}/`;
+  const method = "PATCH";
+  const data = validatedFields.data;
 
-  // Send a PATCH request to the backend to update an employee
-  const response = await fetch(`${urls.employees}${id}/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(validatedFields.data),
-  });
+  const response = await request(url, method, data);
 
   // Handle invalide data rejected by the backend
   if (response.status === 400) {
@@ -156,9 +132,6 @@ export async function updateEmployee(
       message: "Failed to create department.",
     };
   }
-
-  // If anything goes wrong, throw an error to be handled by error.tsx file
-  if (!response.ok) handleUnsuccessful(response);
 
   // if the department is created successfully, revalidate the departments page
   revalidatePath(`/employees/${id}`);
