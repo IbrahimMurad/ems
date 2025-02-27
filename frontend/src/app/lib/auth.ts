@@ -23,10 +23,46 @@ export async function setTokens(access: string, refresh: string) {
 
 export async function getTokens() {
   const cookieStore = await cookies();
-  return {
-    accessToken: cookieStore.get(ACCESS_TOKEN_KEY)?.value,
-    refreshToken: cookieStore.get(REFRESH_TOKEN_KEY)?.value,
-  };
+  const verifyResponse = await fetch(
+    "http://127.0.0.1:8000/api/token/verify/",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookieStore.get(ACCESS_TOKEN_KEY)?.value}`,
+      },
+    }
+  );
+  if (verifyResponse.ok) {
+    return {
+      accessToken: cookieStore.get(ACCESS_TOKEN_KEY)?.value,
+      refreshToken: cookieStore.get(REFRESH_TOKEN_KEY)?.value,
+    };
+  }
+
+  const refreshToken = cookieStore.get(REFRESH_TOKEN_KEY)?.value;
+  if (!refreshToken) {
+    return null;
+  }
+
+  const refreshResponse = await fetch(
+    "http://127.0.0.1:8000/api/token/refresh/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ refresh: refreshToken }),
+    }
+  );
+
+  if (refreshResponse.ok) {
+    const { access } = await refreshResponse.json();
+    await setTokens(access, refreshToken);
+    return {
+      accessToken: access,
+      refreshToken,
+    };
+  }
 }
 
 export async function login(email: string, password: string) {

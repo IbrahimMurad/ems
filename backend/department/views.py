@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.select_related("company")
-    # permission_classes = [IsAuthenticated, IsManager]
+    permission_classes = [IsAuthenticated, IsManager]
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
